@@ -1,0 +1,12 @@
+h1 {
+    color: white;
+}
+
+body {
+    background-color: firebrick;
+}
+
+#signup input {
+    display: block;
+    margin: 10px;
+}
