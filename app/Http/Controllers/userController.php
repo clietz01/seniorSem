@@ -4,27 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; 
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth;
 
 class userController extends Controller
 {
     //
-    public function seePost(){
-        return view('submit');
-    }
-
-
     public function register(Request $request){
+        /*
         $incomingfields = $request->validate([
             'name' => 'required',
             'email' => 'required',
             'password' => 'required|confirmed'
         ]);
+        */
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect('/')->withErrors($validator)->withInput();
+        }
+    
+        $incomingfields = $validator->validated();
 
         $incomingfields['password'] = bcrypt($incomingfields['password']);
 
         User::create($incomingfields);
 
-        return 'hello bro';
+        //log user in after registering 
+        session()->regenerate();
+        return redirect('/')->with('success', 'Registration Successful!');
     }
 
     public function login(Request $request){
@@ -34,14 +46,25 @@ class userController extends Controller
             'loginpassword' => 'required'
         ]);
 
-        if (auth()->attempt(['username' => $incomingfields['loginusername'], 
+        if (auth()->attempt(['name' => $incomingfields['loginusername'], 
                              'password' => $incomingfields['loginpassword']
                              ])){
-
-            return 'Congrats!!!';
+            session()->regenerate();
+            return view('profile')->with('success', 'You are now logged in!')->with('user', auth()->user());
 
         }else {
-            return 'DIE!!!!';
+            return redirect('/')->with('failure', 'Incorrect Login!');
         }
     }
+
+
+    public function logout(){
+        auth()->logout();
+        return redirect('/')->with('success', 'You are now logged out!')->withInput();
+    }
+
+    public function showProfile(){
+        return view('profile');
+    }
+
 }
