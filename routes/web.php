@@ -8,9 +8,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::post('/login', [userController::class, 'login']);
-Route::post('/submit', [postController::class, 'storePost']);
+//userController routes
 Route::post('/register', [userController::class, 'register'])->name('register');
 Route::post('/login', [userController::class, 'login'])->name('login');
-Route::get('/mainPage', [postController::class, 'createPost']);
 Route::post('/logout', [userController::class, 'logout']);
+Route::get('/return/{user}', [userController::class, 'showProfile']);
+
+//postController routes
+Route::post('/submit', [postController::class, 'storePost']);
+Route::get('/posts/{post}', [postController::class, 'show']);
+Route::get('/mainPage', [postController::class, 'createPost']);
+
+//threadController routes

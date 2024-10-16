@@ -10,5 +10,5 @@
 {{$slot}}
 
 <footer>
-
+        
 </footer>

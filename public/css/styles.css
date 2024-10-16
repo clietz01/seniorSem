@@ -54,3 +54,7 @@ form input, textarea, button {
     border-radius: 5px;
     cursor: pointer;
 }
+
+a {
+    color: #dc3545;
+}

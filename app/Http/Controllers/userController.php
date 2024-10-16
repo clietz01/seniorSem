@@ -11,13 +11,7 @@ class userController extends Controller
 {
     //
     public function register(Request $request){
-        /*
-        $incomingfields = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required|confirmed'
-        ]);
-        */
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required',
@@ -50,7 +44,15 @@ class userController extends Controller
                              'password' => $incomingfields['loginpassword']
                              ])){
             session()->regenerate();
-            return view('profile')->with('success', 'You are now logged in!')->with('user', auth()->user());
+            $user = auth()->user()->load(['posts']); // Eager load relationships
+            $postCount = $user->posts()->count();
+
+            return view('profile', [
+                'success' => 'You are now logged in!',
+                'user' => $user,
+                'posts' => $user->posts, 
+                'postCount' => $postCount
+            ]);
 
         }else {
             return redirect('/')->with('failure', 'Incorrect Login!');
@@ -60,11 +62,19 @@ class userController extends Controller
 
     public function logout(){
         auth()->logout();
-        return redirect('/')->with('success', 'You are now logged out!')->withInput();
+        return redirect('/')->with('login_success', 'You are now logged out!')->withInput();
     }
 
-    public function showProfile(){
-        return view('profile');
+    public function showProfile(User $user){
+
+        $posts = $user->posts()->latest()->get();
+        $postCount = $user->posts()->count();
+
+        return view('profile', [
+            'user' => $user,
+            'posts' => $posts,
+            'postCount' => $postCount
+        ]);
     }
 
 }

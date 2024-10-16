@@ -10,6 +10,9 @@
     <body>
         <h1>{{$post->title}}</h1>
         <p>{{$post->body}}</p>
+        <form action="/return/{{$post->user->id}}">
+            <button type="submit">Back to Profile</button>
+        </form>
     </body>
     </html>
 </x-layout>

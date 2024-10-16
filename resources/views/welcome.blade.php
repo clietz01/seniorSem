@@ -9,9 +9,9 @@
     </head>
     <body>
 
-        @if (session('success'))
+        @if (session('login_success'))
         <div class="alert-success">
-            {{session('success')}}
+            {{session('login_success')}}
         </div>
         @endif
 

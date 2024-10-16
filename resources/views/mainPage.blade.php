@@ -15,8 +15,7 @@
             <label for="title">Title</label>
             <input type="text" name="title">
             <label for="body">Body</label>
-            <textarea name="body" id="userInput" rows="10" cols="50">
-            </textarea>
+            <textarea name="body" id="userInput" rows="10" cols="50">Share something!</textarea>
             <button type="submit">Post</button>
         </form>
     </body>
