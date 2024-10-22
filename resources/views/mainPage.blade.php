@@ -9,7 +9,7 @@
     
     </head>
     <body>
-        <h1>What's On Your Mind?</h1>
+        <h1 id="channel_slogan">What's On Your Mind?</h1>
         <form action="/submit" method="POST" id="mainPost">
             @csrf
             <label for="title">Title</label>

@@ -48,4 +48,8 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany(post::class, 'user_id');
     }
+
+    public function channels(){
+        return $this->hasMany(channel::class);
+    }
 }

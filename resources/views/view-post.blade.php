@@ -13,6 +13,10 @@
         <form action="/return/{{$post->user->id}}">
             <button type="submit">Back to Profile</button>
         </form>
+
+        <form action="/channels/{{$post->channel_id}}">
+            <button type="submit">Back to Channel</button>
+        </form>
     </body>
     </html>
 </x-layout>

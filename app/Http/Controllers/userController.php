@@ -17,7 +17,7 @@ class userController extends Controller
             'email' => 'required',
             'password' => 'required|confirmed'
         ]);
-        
+            
         if ($validator->fails()) {
             return redirect('/')->withErrors($validator)->withInput();
         }
@@ -64,7 +64,7 @@ class userController extends Controller
         auth()->logout();
         return redirect('/')->with('login_success', 'You are now logged out!')->withInput();
     }
-
+    
     public function showProfile(User $user){
 
         $posts = $user->posts()->latest()->get();

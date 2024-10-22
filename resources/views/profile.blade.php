@@ -10,7 +10,7 @@
     </head>
     <body>
         <h1>Welcome back, {{$user->name}}</h1>
-        <form action="/mainPage" method="GET">
+        <form action="/channel" method="GET">
             <button type="submit">Make a Post!</button>
         </form>
         <div id="user_posts">
@@ -24,6 +24,9 @@
                 @endforeach
                 @endif
             </ul>
+        </div>
+        <div id="user_channels">
+            <h3>Your Channels:</h3>
         </div>
     </body>
     </html>

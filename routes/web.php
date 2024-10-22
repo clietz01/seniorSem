@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\channelController;
 use App\Http\Controllers\postController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
@@ -19,4 +20,7 @@ Route::post('/submit', [postController::class, 'storePost']);
 Route::get('/posts/{post}', [postController::class, 'show']);
 Route::get('/mainPage', [postController::class, 'createPost']);
 
-//threadController routes
+//channelController routes
+Route::get('/channel', [channelController::class, 'channelScreen']);
+Route::post('/createChannel', [channelController::class, 'createChannel']);
+Route::get('/channels/{channel}', [channelController::class, 'viewChannel']);
