@@ -12,13 +12,13 @@
             function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
-            } else { 
+            } else {
                 x.innerHTML = "Geolocation is not supported by this browser.";
             }
             }
 
             function showPosition(position) {
-            x.innerHTML = "Latitude: " + position.coords.latitude + 
+            x.innerHTML = "Latitude: " + position.coords.latitude +
             "<br>Longitude: " + position.coords.longitude;
             }
         </script>
@@ -30,7 +30,9 @@
         <h1>Choose a Channel to post in. Or Make One!</h1>
         <h3>Existing Channels:</h3>
         <ul>
-               
+            @foreach ($channels as $channel)
+                <li><a href="/channels/{{$channel->id}}">{{$channel->title}}</a></li>
+            @endforeach
         </ul>
         <button onclick="getLocation()">Check Location</button>
         <p id="demo"></p>

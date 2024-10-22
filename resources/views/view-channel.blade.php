@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="{{asset('css/styles.css')}}">
     </head>
     <body>
-        <h1>Welcome to {{$channel->title}}</h1>
+        <h1>Welcome to <div id="channel_title">{{$channel->title}}</div></h1>
         <p>{{$channel->description}}</p>
         <hr>
         <h2>Posts in {{$channel->title}}:</h2>
@@ -23,6 +23,7 @@
             @endforeach
             @endif
         </ul>
+        <a href="/"></a>
     </body>
     </html>
 </x-layout>

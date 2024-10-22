@@ -13,7 +13,11 @@ class channelController extends Controller
     //
     public function channelScreen(){
 
-        return view('channels');
+        $channels = channel::all();
+
+        return view('channels', [
+            'channels' => $channels
+        ]);
 
     }
 
@@ -42,7 +46,7 @@ class channelController extends Controller
     }
 
     public function viewChannel(channel $channel){
-        $posts = $channel->post()->latest()->get(); 
+        $posts = $channel->post()->latest()->get();
         $postCount = $channel->post()->count();
 
         return view('view-channel', [

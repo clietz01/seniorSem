@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::table('channels', function (Blueprint $table) {
-            
-            $table->string('slogan');
+        Schema::table('posts', function (Blueprint $table){
+            $table->unsignedBigInteger('channel_id');
+            $table->foreign('channel_id')->references('id')->on('channels');
         });
     }
 
