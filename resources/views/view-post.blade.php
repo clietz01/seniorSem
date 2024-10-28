@@ -8,8 +8,11 @@
         <title>Post</title>
     </head>
     <body>
-        <h1>{{$post->title}}</h1>
-        <p>{{$post->body}}</p>
+        <h1 id="post-title">{{$post->title}}</h1>
+        <p id="post-body">{{$post->body}}</p>
+        @if(auth()->check() && auth()->user()->id == $post->user_id)
+            <button id="edit-post-button">Edit Post</button>
+        @endif
         <form action="/return/{{$post->user->id}}">
             <button type="submit">Back to Profile</button>
         </form>

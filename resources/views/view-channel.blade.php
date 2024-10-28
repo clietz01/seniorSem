@@ -10,7 +10,10 @@
     </head>
     <body>
         <h1>Welcome to <div id="channel_title">{{$channel->title}}</div></h1>
-        <p>{{$channel->description}}</p>
+        <div id="options">
+            <p>{{$channel->description}}</p>
+            <a href="/channel"><button>Return to Channel Selection</button></a>
+        </div>
         <hr>
         <h2>Posts in {{$channel->title}}:</h2>
         <ul>
@@ -19,11 +22,21 @@
                 <h4>Help by adding a post!</h4>
             @else
             @foreach ($posts as $post)
-                <li><a href="/posts/{{$post->id}}">{{$post->title}}</li>
+                <li><a href="/posts/{{$post->id}}">{{$post->title}}</a></li>
             @endforeach
             @endif
         </ul>
-        <a href="/"></a>
+        <hr>
+        <h2>Add to <div id="channel_title">{{$channel->title}}</div></h2>
+        <h1 id="channel_slogan">{{$channel->slogan}}</h1>
+        <form action="{{ route('posts.store', ['channel' => $channel->id]) }}" method="POST" id="mainPost">
+            @csrf
+            <label for="title">Title</label>
+            <input type="text" name="title">
+            <label for="body">Body</label>
+            <textarea name="body" id="userInput" rows="10" cols="50">Share something!</textarea>
+            <button type="submit">Post</button>
+        </form>
     </body>
     </html>
 </x-layout>

@@ -14,7 +14,7 @@
             <button type="submit">Make a Post!</button>
         </form>
         <div id="user_posts">
-            <h3>Your posts:</h3>
+            <h3>Your posts: [{{$postCount}}]</h3>
             <ul>
                 @if ($posts->isEmpty())
                     <h3>You have no posts!</h3>
@@ -26,7 +26,16 @@
             </ul>
         </div>
         <div id="user_channels">
-            <h3>Your Channels:</h3>
+            <h3>Channels you've posted to:</h3>
+            <ul>
+                @if($channels->isEmpty())
+                    <h3>You haven't posted to any Channels yet.</h3>
+                @else
+                    @foreach ($channels as  $channel)
+                        <li><a href="/channels/{{$channel->id}}">{{$channel->title}}</a></li>
+                    @endforeach
+                @endif
+            </ul>
         </div>
     </body>
     </html>

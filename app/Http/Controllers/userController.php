@@ -17,7 +17,7 @@ class userController extends Controller
             'email' => 'required',
             'password' => 'required|confirmed'
         ]);
-            
+
         if ($validator->fails()) {
             return redirect('/')->withErrors($validator)->withInput();
         }
@@ -43,15 +43,18 @@ class userController extends Controller
         if (auth()->attempt(['name' => $incomingfields['loginusername'], 
                              'password' => $incomingfields['loginpassword']
                              ])){
+
             session()->regenerate();
             $user = auth()->user()->load(['posts']); // Eager load relationships
-            $postCount = $user->posts()->count();
+            $postCount = $user->posts()->count(); //get amount of user posts
+            $channels = $user->posts->pluck('channel')->unique(); //find channels user has posted to
 
             return view('profile', [
                 'success' => 'You are now logged in!',
                 'user' => $user,
                 'posts' => $user->posts, 
-                'postCount' => $postCount
+                'postCount' => $postCount,
+                'channels' => $channels
             ]);
 
         }else {
@@ -69,11 +72,13 @@ class userController extends Controller
 
         $posts = $user->posts()->latest()->get();
         $postCount = $user->posts()->count();
+        $channels = $user->posts->pluck('channel')->unique();
 
         return view('profile', [
             'user' => $user,
             'posts' => $posts,
-            'postCount' => $postCount
+            'postCount' => $postCount,
+            'channels' => $channels
         ]);
     }
 

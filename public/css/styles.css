@@ -59,6 +59,11 @@ a {
     color: #dc3545;
 }
 
-h1 #channel_title{
+#channel_title{
     color: rgb(193, 0, 0);
+    display: inline;
+}
+
+#options a, p{
+    display: inline;
 }

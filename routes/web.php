@@ -16,9 +16,10 @@ Route::post('/logout', [userController::class, 'logout']);
 Route::get('/return/{user}', [userController::class, 'showProfile']);
 
 //postController routes
-Route::post('/submit', [postController::class, 'storePost']);
+//Route::post('/submit', [postController::class, 'storePost']);
 Route::get('/posts/{post}', [postController::class, 'show']);
 Route::get('/mainPage', [postController::class, 'createPost']);
+Route::post('/channels/{channel}/posts', [postController::class, 'storePost'])->name('posts.store');
 
 //channelController routes
 Route::get('/channel', [channelController::class, 'channelScreen']);
