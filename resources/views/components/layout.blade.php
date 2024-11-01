@@ -1,8 +1,10 @@
 <header> 
         <form action="/logout" method="POST">
-                <button id="logout">Logout</button>
-                @csrf
-                <img src="components/default-avatar-icon-of-social-media-user-vector.jpg" alt="profile">
+                <div id="head-container">
+                        <button id="logout">Logout</button>
+                        @csrf
+                        <a href="/return/{{auth()->id()}}"><img id="profile-pic" src={{asset('images/default-avatar-icon-of-social-media-user-vector.jpg')}} alt="profile"></a>
+                </div>
                 <hr>
         </form>
 </header>

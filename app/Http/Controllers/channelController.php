@@ -48,11 +48,13 @@ class channelController extends Controller
     public function viewChannel(channel $channel){
         $posts = $channel->post()->latest()->get();
         $postCount = $channel->post()->count();
+        //$replies = $channel->post()->reply()->latest()->get();
 
         return view('view-channel', [
             'channel' => $channel,
             'posts' => $posts,
             'postcount' => $postCount
+            //'replies' => $replies
         ]);
     }
 }

@@ -62,8 +62,40 @@ a {
 #channel_title{
     color: rgb(193, 0, 0);
     display: inline;
+    font-weight: bold;
 }
 
 #options a, p{
     display: inline;
+}
+
+#main-container {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+
+#display-half {
+    padding-left: 50px;
+    padding-top: 20%;
+    margin: auto;
+    height: 100vh;
+    border-left: 1px solid whitesmoke;
+    
+    
+}
+
+#setup-half, #display-half {
+    display: inline-block;
+    align-items: center;
+}
+
+#profile-pic {
+    height: 30px;
+    width: 30px;
+}
+
+#head-container {
+    display: flex;
+    align-items: center;
 }

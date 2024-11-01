@@ -18,4 +18,8 @@ class post extends Model
     public function channel(){
         return $this->belongsTo(channel::class);
     }
+
+    public function reply(){
+        return $this->hasMany(reply::class);
+    }
 }

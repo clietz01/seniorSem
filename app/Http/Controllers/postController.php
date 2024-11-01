@@ -20,6 +20,8 @@ class postController extends Controller
         $incoming_fields['body'] = strip_tags($incoming_fields['body']);
         //^strips user input of malicious HTML
         $incoming_fields['user_id'] = auth()->id();//adds user_id to $incoming_fields array
+
+
         $newPost = post::create([
             'title' => $incoming_fields['title'],
             'body' => $incoming_fields['body'],
@@ -27,12 +29,12 @@ class postController extends Controller
             'channel_id' => $channel->id 
         ]);
 
-
-
+        $replies = $newPost->reply()->get();
 
         return view('/view-post', [
             'post' => $newPost,
-            'channel_id' => $channel->id
+            'channel_id' => $channel->id,
+            'replies' => $replies
         ]);
     }
 
@@ -44,7 +46,13 @@ class postController extends Controller
 
     public function show(Post $post){
 
-        return view('view-post', ['post' => $post]);
+        $replies = $post->reply()->get();
+
+        return view('view-post', [
+
+            'post' => $post,
+            'replies' => $replies
+        ]);
     }
 
 }
