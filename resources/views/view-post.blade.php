@@ -12,6 +12,7 @@
         <p id="post-body">{{$post->body}}</p>
         @if(auth()->check() && auth()->user()->id == $post->user_id)
             <button id="edit-post-button">Edit Post</button>
+            <button id="delete-post-button">Delete Post</button>
             @else
             <button id="reply-button">Reply</button>
         @endif
