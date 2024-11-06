@@ -55,5 +55,30 @@ class postController extends Controller
         ]);
     }
 
+
+    public function update(Request $request, post $post){
+        
+        $request->validate(
+            [
+                'body' => 'required|string'
+                
+                ]
+        );
+
+        $post->body = $request->input('body');
+        $post->save();
+        
+
+        return response()->json(['success' => true]);
+    }
+
+
+    public function reply(Request $request, post $post){
+
+        $request->validate([
+            'content' => 'required|string'
+        ]);
+    }
+
 }
     

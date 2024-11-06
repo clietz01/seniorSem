@@ -79,7 +79,7 @@ a {
     padding-left: 50px;
     padding-top: 20%;
     margin: auto;
-    height: 100vh;
+    height: 70vh;
     border-left: 1px solid whitesmoke;
     
     
@@ -98,4 +98,29 @@ a {
 #head-container {
     display: flex;
     align-items: center;
+}
+
+#footer-list li{
+    display: inline-block;
+    margin-right: 100px;
+    margin-top: 10%;
+}
+
+#footer-container {
+    width: 100%;
+    text-align: center;
+}
+
+#timestamp p{
+    margin-bottom: 20px;
+    color: #dc3545;
+}
+
+#post-body {
+    margin: 1%;
+}
+
+#post-container {
+    margin-top: 2%;
+    margin-top: 2%;
 }

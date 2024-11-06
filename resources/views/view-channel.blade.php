@@ -27,7 +27,7 @@
             @endif
         </ul>
         <hr>
-        <h2>Add to <div id="channel_title">{{$channel->title}}</div></h2>
+        <h2>Add a post to <div id="channel_title">{{$channel->title}}</div></h2>
         <h1 id="channel_slogan">{{$channel->slogan}}</h1>
         <form action="{{ route('posts.store', ['channel' => $channel->id]) }}" method="POST" id="mainPost">
             @csrf

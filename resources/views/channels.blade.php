@@ -7,21 +7,6 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Channels</title>
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-        <script>
-            const x = document.getElementById("demo");
-            function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-            }
-
-            function showPosition(position) {
-            x.innerHTML = "Latitude: " + position.coords.latitude +
-            "<br>Longitude: " + position.coords.longitude;
-            }
-        </script>
     </head>
 
 
@@ -48,6 +33,21 @@
             <textarea name="description" id="description" cols="30" rows="10"></textarea>
             <button type="submit">Create Channel</button>
         </form>
+        <script>
+            const x = document.getElementById("demo");
+            function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+            }
+
+            function showPosition(position) {
+            x.innerHTML = "Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude;
+            }
+        </script>
     </body>
     </html>
 </x-layout>
