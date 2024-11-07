@@ -18,8 +18,10 @@ Route::get('/return/{user}', [userController::class, 'showProfile']);
 //postController routes
 //Route::post('/submit', [postController::class, 'storePost']);
 Route::get('/posts/{post}', [postController::class, 'show']);
+Route::put('/posts/{post}', [postController::class, 'update']);
 Route::get('/mainPage', [postController::class, 'createPost']);
 Route::post('/channels/{channel}/posts', [postController::class, 'storePost'])->name('posts.store');
+Route::post('/reply/{post}', [postController::class, 'reply']);
 
 //channelController routes
 Route::get('/channel', [channelController::class, 'channelScreen']);
