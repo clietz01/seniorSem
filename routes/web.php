@@ -21,7 +21,8 @@ Route::get('/posts/{post}', [postController::class, 'show']);
 Route::put('/posts/{post}', [postController::class, 'update']);
 Route::get('/mainPage', [postController::class, 'createPost']);
 Route::post('/channels/{channel}/posts', [postController::class, 'storePost'])->name('posts.store');
-Route::post('/reply/{post}', [postController::class, 'reply']);
+Route::get('/reply/{post}', [postController::class, 'replyPage'])->name('replyPage');
+route::post('/{post}/createReply', [postController::class, 'createReply'])->name('createReply');
 
 //channelController routes
 Route::get('/channel', [channelController::class, 'channelScreen']);

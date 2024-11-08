@@ -19,7 +19,7 @@
             </div>
             @else
             <p id="post-body">{{$post->body}}</p>
-            <button id="reply-button">Reply</button>
+            <a href="/reply/{{$post->id}}"><button id="reply-button">Reply</button></a>
         @endif
         <hr>
         <h3>Replies:</h3>

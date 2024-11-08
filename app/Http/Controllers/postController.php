@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\channel;
 use Illuminate\Http\Request;
 use App\Models\post;
+use App\Models\reply;
 
 class postController extends Controller
 {
@@ -73,11 +74,36 @@ class postController extends Controller
     }
 
 
-    public function reply(Request $request, post $post){
+    public function replyPage(post $post){
 
-        $request->validate([
+        $replies = $post->reply()->get();
+
+       return view('replies', [
+
+        'post' => $post,
+        'replies' => $replies
+
+       ]);
+
+    }
+
+
+    public function createReply(Request $request, post $post){
+
+        $incoming_fields = $request->validate([
             'content' => 'required|string'
         ]);
+
+        $incoming_fields['content'] = strip_tags($incoming_fields['content']);
+        $incoming_fields['user_id'] = auth()->id();
+
+        $newReply = reply::create([
+            'content' => $incoming_fields['content'],
+            'user_id' => $incoming_fields['user_id'],
+            'post_id' => $post->id
+        ]);
+
+        return redirect()->route('replyPage', $post->id);
     }
 
 }
