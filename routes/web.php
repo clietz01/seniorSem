@@ -22,9 +22,10 @@ Route::put('/posts/{post}', [postController::class, 'update']);
 Route::get('/mainPage', [postController::class, 'createPost']);
 Route::post('/channels/{channel}/posts', [postController::class, 'storePost'])->name('posts.store');
 Route::get('/reply/{post}', [postController::class, 'replyPage'])->name('replyPage');
-route::post('/{post}/createReply', [postController::class, 'createReply'])->name('createReply');
+Route::post('/{post}/createReply', [postController::class, 'createReply'])->name('createReply');
+Route::get('/posts/delete/{post}', [postController::class, 'deletePost']);
 
 //channelController routes
 Route::get('/channel', [channelController::class, 'channelScreen']);
 Route::post('/createChannel', [channelController::class, 'createChannel']);
-Route::get('/channels/{channel}', [channelController::class, 'viewChannel']);
+Route::get('/channels/{channel}', [channelController::class, 'viewChannel'])->name('channels.show');

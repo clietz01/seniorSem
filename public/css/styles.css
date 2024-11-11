@@ -134,11 +134,31 @@ a {
     text-decoration: none;
 }
 
-#title-back-link:hover {
-    background-color: rgb(60, 60, 60);
+#title-back-link h1:hover {
+    color: #dc3545;
 }
 
 #current-replies button{
 
     display: inline-block;
 }
+
+.comment {
+    display: flex;
+    align-items: center; /* Vertically align items */
+  }
+  
+  .comment-content {
+    display: inline-flex; /* Keep content on one line */
+    align-items: center; /* Vertically align content and timestamp */
+    flex-grow: 1; /* Allow comment content to take up available space */
+  }
+
+  .comment-content #timestamp {
+
+    margin-left: 3px;
+  }
+
+  button:hover {
+    color: #74000a;
+  }

@@ -19,4 +19,8 @@ class channel extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function path(){
+        return route('channels.show', $this);
+    }
 }

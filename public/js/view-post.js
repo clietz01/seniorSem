@@ -16,6 +16,7 @@ editButton.addEventListener('click', () => {
 
   postButton.addEventListener('click', () => {
     const updatedContent = textarea.value;
+    
 
     fetch(`/posts/${postId}`, {
       method: 'PUT',

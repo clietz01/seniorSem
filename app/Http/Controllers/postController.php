@@ -6,6 +6,7 @@ use App\Models\channel;
 use Illuminate\Http\Request;
 use App\Models\post;
 use App\Models\reply;
+use Illuminate\Support\Facades\Redirect;
 
 class postController extends Controller
 {
@@ -71,6 +72,15 @@ class postController extends Controller
         
 
         return response()->json(['success' => true]);
+    }
+
+
+    public function deletePost(post $post){
+
+        $destination = $post->channel;
+        $post->delete();
+
+        return Redirect::to($destination->path());
     }
 
 

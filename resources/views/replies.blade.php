@@ -26,7 +26,11 @@
         <div id="current-replies">
             <ul>
                 @foreach ($replies as $reply)
-                    <li><p>{{$reply->content}}</p> <div id="timestamp"><p>{{$reply->created_at}}</p></div><a href="#"><button>Reply</button></a></li>
+                    <li class="comment">
+                        <div class="comment-content">
+                            <p>{{$reply->content}}</p> <div id="timestamp"> <p>{{$reply->created_at}}</p> </div><a href="#"><button>Reply</button></a>
+                        </div>
+                    </li>
                 @endforeach
             </ul>
         </div>

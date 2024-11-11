@@ -15,6 +15,7 @@
             <div id="post-container">
                 <p id="post-body">{{$post->body}}</p>
                 <button id="edit-post-button" data-post-id="{{$post->id}}">Edit Post</button>
+                <a href="/posts/delete/{{$post->id}}"><button id="delete-post-button">Delete Post</button></a>
                 <div id="repost-button"></div>
             </div>
             @else
@@ -29,7 +30,7 @@
         @else
             <ul>
                 @foreach ($replies as $reply)
-                    <li>{{$reply->content}}</li>
+                    <li><p>{{$reply->content}}</p></li>
                 @endforeach
             </ul>
         @endif
@@ -39,13 +40,17 @@
                 <p>Help add to this masterpiece!</p>
             @else
             <ul>
-                @foreach ($replies as $reply)
-                    <li><p>{{$reply->content}}</p> <p>Created {{$reply->created_at}}</p></li>
+                @foreach ($replies->take(3) as $reply)
+                    <li>
+                        <div class="comment-content">
+                            <p>{{$reply->content}} Created</p> <div id="timestamp"><p>{{$reply->created_at}}</p></div>
+                        </div>
+                    </li>
                 @endforeach
             </ul>
             @endif
         @endif
-        <div id="reply-container" data-post-id="{{$post->id}}"></div> <!--Where replies will be displayed -->
+        <a href="/reply/{{$post->id}}"><button>See All Replies</button></a>
         <hr>
         <form action="/return/{{$post->user->id}}">
             <button type="submit">Back to Profile</button>
