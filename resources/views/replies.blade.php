@@ -12,7 +12,9 @@
         <div id="timestamp">
             <p>Post created {{$post->created_at}}</p>
         </div>
-        <h1>{{$post->title}}</h1>
+        <a href="/posts/{{$post->id}}" id="title-back-link">
+            <h1>{{$post->title}}</h1>
+        </a>
         <h3>{{$post->body}}</h3>
         <hr>
         <h2>Reply to post:</h2>
@@ -24,7 +26,7 @@
         <div id="current-replies">
             <ul>
                 @foreach ($replies as $reply)
-                    <li>{{$reply->content}} Created {{$reply->created_at}}</li>
+                    <li><p>{{$reply->content}}</p> <div id="timestamp"><p>{{$reply->created_at}}</p></div><a href="#"><button>Reply</button></a></li>
                 @endforeach
             </ul>
         </div>

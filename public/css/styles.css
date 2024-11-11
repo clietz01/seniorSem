@@ -124,3 +124,21 @@ a {
     margin-top: 2%;
     margin-top: 2%;
 }
+
+#current-replies {
+    background-color: rgb(55, 55, 55);
+    padding: 3px;
+}
+
+#title-back-link{
+    text-decoration: none;
+}
+
+#title-back-link:hover {
+    background-color: rgb(60, 60, 60);
+}
+
+#current-replies button{
+
+    display: inline-block;
+}

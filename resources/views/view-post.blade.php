@@ -37,6 +37,12 @@
             @if ($replies->isEmpty())
                 <h3>This post has no replies yet!</h3>
                 <p>Help add to this masterpiece!</p>
+            @else
+            <ul>
+                @foreach ($replies as $reply)
+                    <li><p>{{$reply->content}}</p> <p>Created {{$reply->created_at}}</p></li>
+                @endforeach
+            </ul>
             @endif
         @endif
         <div id="reply-container" data-post-id="{{$post->id}}"></div> <!--Where replies will be displayed -->
