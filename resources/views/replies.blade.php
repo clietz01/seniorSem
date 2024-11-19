@@ -26,11 +26,19 @@
         <div id="current-replies">
             <ul>
                 @foreach ($replies as $reply)
+                    @if (auth()->check() && $reply->user_id == auth()->user()->id)
                     <li class="comment">
                         <div class="comment-content">
-                            <p>{{$reply->content}}</p> <div id="timestamp"> <p>{{$reply->created_at}}</p> </div><a href="#"><button>Reply</button></a>
+                            <div id="comment-body"><p>{{$reply->content}}</p></div> <div id="timestamp"> <p>{{$reply->created_at}}</p></div><a href="#"><button>Edit Reply</button></a>
                         </div>
                     </li>
+                    @else
+                    <li class="comment">
+                        <div class="comment-content">
+                            <div id="comment-body"><p>{{$reply->content}}</p></div> <div id="timestamp"> <p>{{$reply->created_at}}</p></div><a href="#"><button>Reply</button></a>
+                        </div>
+                    </li>
+                    @endif
                 @endforeach
             </ul>
         </div>
