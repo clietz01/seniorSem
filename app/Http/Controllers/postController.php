@@ -104,7 +104,7 @@ class postController extends Controller
             'content' => 'required|string'
         ]);
 
-        $incoming_fields['content'] = strip_tags($incoming_fields['content']);
+        $incoming_fields['content'] = strip_tags($incoming_fields['content']); //prevent malicious user injection
         $incoming_fields['user_id'] = auth()->id();
 
         $newReply = reply::create([
@@ -114,6 +114,17 @@ class postController extends Controller
         ]);
 
         return redirect()->route('replyPage', $post->id);
+    }
+
+
+    public function updateReply(Request $request, reply $reply){
+
+        $request->validate([
+            'body' => 'required|string'
+        ]);
+
+        $reply->content = $request['body'];
+        $reply->save();
     }
 
 }

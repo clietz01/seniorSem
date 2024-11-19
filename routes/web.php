@@ -24,6 +24,7 @@ Route::post('/channels/{channel}/posts', [postController::class, 'storePost'])->
 Route::get('/reply/{post}', [postController::class, 'replyPage'])->name('replyPage');
 Route::post('/{post}/createReply', [postController::class, 'createReply'])->name('createReply');
 Route::get('/posts/delete/{post}', [postController::class, 'deletePost']);
+Route::put('/posts/replies/{reply}', [postController::class, 'updateReply']);
 
 //channelController routes
 Route::get('/channel', [channelController::class, 'channelScreen']);

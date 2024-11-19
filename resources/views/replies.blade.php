@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Replies</title>
         <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
         <div id="timestamp">
@@ -29,19 +30,24 @@
                     @if (auth()->check() && $reply->user_id == auth()->user()->id)
                     <li class="comment">
                         <div class="comment-content">
-                            <div id="comment-body"><p>{{$reply->content}}</p></div> <div id="timestamp"> <p>{{$reply->created_at}}</p></div><a href="#"><button>Edit Reply</button></a>
+                            <div class="comment-body"><p>{{$reply->content}}</p>
+                            </div> <div id="timestamp"> <p>{{$reply->created_at}}</p></div>
+                            <button class="edit-reply-button" data-edit-Id="{{$reply->id}}">Edit Reply</button>
                         </div>
                     </li>
                     @else
                     <li class="comment">
                         <div class="comment-content">
-                            <div id="comment-body"><p>{{$reply->content}}</p></div> <div id="timestamp"> <p>{{$reply->created_at}}</p></div><a href="#"><button>Reply</button></a>
+                            <div class="comment-body"><p>{{$reply->content}}</p></div> 
+                            <div id="timestamp"> <p>{{$reply->created_at}}</p></div>
+                            <button class="reply-reply-button" data-reply-Id="{{$reply->user_id}}">Reply</button>
                         </div>
                     </li>
                     @endif
                 @endforeach
             </ul>
         </div>
+        <script src="{{asset('js/edit-reply.js')}}"></script>
     </body>
     </html>
 </x-layout>
