@@ -31,7 +31,7 @@ class postController extends Controller
             'channel_id' => $channel->id 
         ]);
 
-        $replies = $newPost->reply()->get();
+        $replies = $newPost->replies()->get();
 
         return view('/view-post', [
             'post' => $newPost,
@@ -48,7 +48,8 @@ class postController extends Controller
 
     public function show(Post $post){
 
-        $replies = $post->reply()->get();
+        $replies = $post->replies()->whereNull('parent_id')->get();
+        $post->load(['user', 'replies.user', 'replies.replies.user']);
 
         return view('view-post', [
 
@@ -86,7 +87,10 @@ class postController extends Controller
 
     public function replyPage(post $post){
 
-        $replies = $post->reply()->get();
+        $post->load(['user', 'replies.user', 'replies.replies.user']);
+
+        $replies = $post->replies()->whereNull('parent_id')->get();
+        $post->load('user');
 
        return view('replies', [
 
@@ -120,11 +124,40 @@ class postController extends Controller
     public function updateReply(Request $request, reply $reply){
 
         $request->validate([
-            'body' => 'required|string'
+            'content' => 'required|string'
         ]);
 
-        $reply->content = $request['body'];
+        $reply->content = $request['content'];
         $reply->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Reply updated successfully!"
+
+        ]);
+    }
+
+    public function storeNestedReply(Request $request, Reply $reply)
+    {
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+    
+        $newReply = $reply->replies()->create([
+            'content' => $request->content,
+            'user_id' => auth()->id(),
+            'post_id' => $reply->post_id
+        ]);
+    
+        return response()->json([
+            'id' => $newReply->id,
+            'content' => $newReply->content,
+            'created_at' => $newReply->created_at->toDateTimeString(),
+            'user' => [
+                'id' => $newReply->user->id,
+                'name' => $newReply->user->name,
+            ],
+        ]);
     }
 
 }

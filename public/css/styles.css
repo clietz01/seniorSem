@@ -143,22 +143,68 @@ a {
     display: inline-block;
 }
 
+
 .comment {
+    margin: 10px 0; /* Add spacing between replies */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #222222; /* Light background for comments */
+    position: relative;
+}
+
+/* Style for the main container of the reply and its content */
+.comment-content {
     display: flex;
-    align-items: center; /* Vertically align items */
-  }
-  
-  .comment-content {
-    display: inline-flex; /* Keep content on one line */
-    align-items: center; /* Vertically align content and timestamp */
-    flex-grow: 1; /* Allow comment content to take up available space */
-  }
+    flex-direction: column; /* Allow stacked content (user, body, timestamp) */
+}
 
-  .comment-content #timestamp {
+/* Indent nested replies */
+.reply-replies-container {
+    margin-left: 20px; /* Indentation for nested replies */
+    border-left: 2px solid #252525; /* Subtle visual distinction for nesting */
+    padding-left: 10px;
+}
 
-    margin-left: 3px;
-  }
+/* Timestamp styling */
+#timestamp {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 5px;
+}
 
-  button:hover {
-    color: #74000a;
-  }
+/* Display names */
+.display-name {
+    color: rebeccapurple;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Button styles */
+button {
+    background-color: #74000a;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4e0000;
+}
+
+/* Nested comment body alignment */
+.comment-body {
+    margin: 5px 0;
+}
+
+/* Main header styling */
+#post-header {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #202020;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

@@ -4,6 +4,7 @@ use App\Http\Controllers\channelController;
 use App\Http\Controllers\postController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
+use App\Models\post;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,7 @@ Route::get('/reply/{post}', [postController::class, 'replyPage'])->name('replyPa
 Route::post('/{post}/createReply', [postController::class, 'createReply'])->name('createReply');
 Route::get('/posts/delete/{post}', [postController::class, 'deletePost']);
 Route::put('/posts/replies/{reply}', [postController::class, 'updateReply']);
+Route::post('/replies/{reply}/reply', [postController::class, 'storeNestedReply'])->name('nestedReply');
 
 //channelController routes
 Route::get('/channel', [channelController::class, 'channelScreen']);
