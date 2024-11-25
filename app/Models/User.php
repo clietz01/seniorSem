@@ -50,6 +50,9 @@ class User extends Authenticatable
     }
 
     public function channels(){
-        return $this->hasMany(channel::class);
+        return $this->belongsToMany(channel::class, 'hash_names')
+        ->withPivot('anonymous_username')
+        ->withTimestamps();
     }
+
 }

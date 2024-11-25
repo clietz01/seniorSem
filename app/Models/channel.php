@@ -9,7 +9,7 @@ class channel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'slogan', 'user_id'];
+    protected $fillable = ['title', 'description', 'slogan'];
 
     public function post(){
         return $this->hasMany(post::class);
