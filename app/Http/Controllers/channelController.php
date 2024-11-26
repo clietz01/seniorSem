@@ -35,7 +35,7 @@ class channelController extends Controller
             'title' => $incomingFields['title'],
             'description' => $incomingFields['description'],
             'slogan' => $incomingFields['slogan'],
-            'user_id' => auth()->id() // Explicitly include user_id
+            #'user_id' => auth()->id() // Explicitly include user_id
         ]);
 
         return view('view-channel', [
