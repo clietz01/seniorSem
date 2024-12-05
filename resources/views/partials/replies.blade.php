@@ -2,7 +2,7 @@
     <div class="comment-content">
         <div class="comment-header">
             <p>Created by</p> 
-            <p class="display-name">{{ $reply->user->name }}</p>
+            <p class="display-name">{{ $anonymousUsername }}</p>
         </div>
         <div id="comment-body-container">
             <div class="comment-body">
@@ -23,7 +23,7 @@
     @if ($reply->replies->isNotEmpty())
         <ul>
             @foreach ($reply->replies as $nestedReply)
-                @include('partials.replies', ['reply' => $nestedReply])
+                @include('partials.replies', ['reply' => $nestedReply, 'anonymousUsername' => $nestedReply->anonymousUsername])
             @endforeach
         </ul>
     @endif

@@ -46,15 +46,55 @@ class channelController extends Controller
     }
 
     public function viewChannel(channel $channel){
-        $posts = $channel->post()->latest()->get();
-        $postCount = $channel->post()->count();
-        //$replies = $channel->post()->reply()->latest()->get();
 
+        $this->ensureAnonymousUsername($channel->id);
+
+        // Eager load related data
+        $posts = $channel->post()->with('channel.users')->latest()->get();
+
+        foreach ($posts as $post) {
+            \Log::info('Post Debug', [
+                'post_id' => $post->id,
+                'user_id' => $post->user_id,
+                'channel_id' => $post->channel_id,
+                'anonymousUsername' => $post->anonymousUsername ?? 'N/A',
+            ]); 
+        }
+    
+        $postCount = $channel->post()->count();
+    
+        $user = Auth::user();
+        $anonymousUsername = $user->channels()
+            ->where('channel_id', $channel->id)
+            ->first()
+            ->pivot
+            ->anonymous_username;
+    
         return view('view-channel', [
             'channel' => $channel,
             'posts' => $posts,
-            'postcount' => $postCount
-            //'replies' => $replies
+            'postcount' => $postCount,
+            'anonymousUsername' => $anonymousUsername,
         ]);
     }
+
+
+    private function ensureAnonymousUsername($channelId){
+    $user = Auth::user();
+
+    // Check if anonymous username already exists
+    $existingPivot = $user->channels()->where('channel_id', $channelId)->exists();
+
+    if (!$existingPivot) {
+        // Generate a unique anonymous name
+        $anonymousUsername = hash_hmac(
+            'sha256',
+            $user->id . $channelId . config('app.key'), // Unique data
+            config('app.key') // Use app key for hashing
+        );
+
+        // Attach the user to the channel with the anonymous username
+        $user->channels()->attach($channelId, ['anonymous_username' => $anonymousUsername]);
+    }
+}
 }

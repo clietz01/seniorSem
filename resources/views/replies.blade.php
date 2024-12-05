@@ -90,9 +90,9 @@
     <body>
         <div id="post-header">
             <div id="timestamp">
-                <p>Post created {{ $post->created_at }} by </p>
+                <p>Post created {{ $post->created_at }} by User</p>
             </div>
-            <p class="display-name">{{ $post->user->name }}</p>
+            <p class="display-name">{{ $reply->anonymousUsername ?? 'Anonymous'}}</p>
         </div>
         <a href="/posts/{{ $post->id }}" id="title-back-link">
             <h1>{{ $post->title }}</h1>
@@ -108,7 +108,7 @@
         <div id="current-replies">
             <ul>
                 @foreach ($replies as $reply)
-                    @include('partials.replies', ['reply' => $reply])
+                    @include('partials.replies', ['reply' => $reply, 'anonymousUsername'=> $reply->anonymousUsername])
                 @endforeach
             </ul>
         </div>

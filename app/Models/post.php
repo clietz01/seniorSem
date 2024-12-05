@@ -22,4 +22,10 @@ class post extends Model
     public function replies(){
         return $this->hasMany(reply::class);
     }
+
+    public function getAnonymousUsernameAttribute(){
+        return $this->channel->users()->
+        where('users.id', $this->user_id)->
+        first()->pivot->anonymous_username ?? 'Anonymous';
+    }
 }

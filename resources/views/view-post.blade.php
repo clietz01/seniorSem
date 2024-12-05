@@ -9,19 +9,21 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
-        <h1 id="post-title">{{$post->title}}</h1>
-        <div id="timestamp"><p>Created {{$post->created_at}}</p></div>
-        @if(auth()->check() && auth()->user()->id == $post->user_id)
-            <div id="post-container">
+        <div class="comment">
+            <h1 id="post-title">{{$post->title}}</h1>
+            <div id="timestamp"><p>Created {{$post->created_at}} by User {{$post->anonymousUsername}}</p></div>
+            @if(auth()->check() && auth()->user()->id == $post->user_id)
+                <div id="post-container">
+                    <p id="post-body">{{$post->body}}</p>
+                    <button id="edit-post-button" data-post-id="{{$post->id}}">Edit Post</button>
+                    <a href="/posts/delete/{{$post->id}}"><button id="delete-post-button">Delete Post</button></a>
+                    <div id="repost-button"></div>
+                </div>
+                @else
                 <p id="post-body">{{$post->body}}</p>
-                <button id="edit-post-button" data-post-id="{{$post->id}}">Edit Post</button>
-                <a href="/posts/delete/{{$post->id}}"><button id="delete-post-button">Delete Post</button></a>
-                <div id="repost-button"></div>
-            </div>
-            @else
-            <p id="post-body">{{$post->body}}</p>
-            <a href="/reply/{{$post->id}}"><button id="reply-button">Reply</button></a>
-        @endif
+                <a href="/reply/{{$post->id}}"><button id="reply-button">Reply</button></a>
+            @endif
+        </div>
         <hr>
         <h3>Replies:</h3>
         @if(auth()->check() && auth()->user()->id == $post->user_id)
@@ -52,13 +54,14 @@
         @endif
         <a href="/reply/{{$post->id}}"><button>See All Replies</button></a>
         <hr>
-        <form action="/return/{{$post->user->id}}">
-            <button type="submit">Back to Profile</button>
-        </form>
-
-        <form action="/channels/{{$post->channel_id}}">
-            <button type="submit">Back to <strong>{{$post->channel->title}}</strong></button>
-        </form>
+        <div class="comment">
+            <form action="/return/{{$post->user->id}}">
+                <button type="submit">Back to Profile</button>
+            </form>
+            <form action="/channels/{{$post->channel_id}}">
+                <button type="submit">Back to <strong>{{$post->channel->title}}</strong></button>
+            </form>
+        </div>
 
         <script src="{{asset('js/view-post.js')}}"></script>
     </body>

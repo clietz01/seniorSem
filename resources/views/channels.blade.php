@@ -13,13 +13,15 @@
 
     <body>
         <h1>Choose a Channel to post in. Or Make One!</h1>
-        <h3>Existing Channels:</h3>
-        <ul>
-            @foreach ($channels as $channel)
-                <li><a href="/channels/{{$channel->id}}">{{$channel->title}}</a></li>
-            @endforeach
-        </ul>
-        <button onclick="getLocation()">Check Location</button>
+        <div class="comment">
+            <h3>Existing Channels:</h3>
+            <ul>
+                @foreach ($channels as $channel)
+                    <li><a href="/channels/{{$channel->id}}">{{$channel->title}}</a></li>
+                @endforeach
+            </ul>
+            <button onclick="getLocation()">Check Location</button>
+        </div>
         <p id="demo"></p>
         <hr>
         <h2>Create a Channel!</h2>

@@ -86,7 +86,7 @@ class postController extends Controller
 
 
     public function replyPage(post $post){
-
+        /*
         $post->load(['user', 'replies.user', 'replies.replies.user']);
 
         $replies = $post->replies()->whereNull('parent_id')->get();
@@ -98,7 +98,40 @@ class postController extends Controller
         'replies' => $replies
 
        ]);
+        */
 
+        $post->load(['user', 'replies.user', 'replies.replies.user']);
+
+    $replies = $post->replies()->whereNull('parent_id')->get();
+
+    // Calculate anonymous usernames for replies
+    $replies = $replies->map(function ($reply) use ($post) {
+        $reply->anonymousUsername = $post->channel
+            ->users()
+            ->where('users.id', $reply->user_id)
+            ->first()
+            ->pivot
+            ->anonymous_username ?? 'Anonymous';
+
+        // Recursively calculate for nested replies
+        $reply->replies = $reply->replies->map(function ($nestedReply) use ($post) {
+            $nestedReply->anonymousUsername = $post->channel
+                ->users()
+                ->where('users.id', $nestedReply->user_id)
+                ->first()
+                ->pivot
+                ->anonymous_username ?? 'Anonymous';
+
+            return $nestedReply;
+        });
+
+        return $reply;
+    });
+
+    return view('replies', [
+        'post' => $post,
+        'replies' => $replies,
+    ]);
     }
 
 
