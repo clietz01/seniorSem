@@ -15,6 +15,8 @@ Route::post('/register', [userController::class, 'register'])->name('register');
 Route::post('/login', [userController::class, 'login'])->name('login');
 Route::post('/logout', [userController::class, 'logout']);
 Route::get('/return/{user}', [userController::class, 'showProfile']);
+Route::get('/profile', [UserController::class, 'editProfile'])->name('profile.edit');
+Route::post('/profile', [UserController::class, 'updateProfilePicture'])->name('profile.updatePicture');
 
 //postController routes
 //Route::post('/submit', [postController::class, 'storePost']);

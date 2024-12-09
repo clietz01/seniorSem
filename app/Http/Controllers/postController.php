@@ -86,19 +86,6 @@ class postController extends Controller
 
 
     public function replyPage(post $post){
-        /*
-        $post->load(['user', 'replies.user', 'replies.replies.user']);
-
-        $replies = $post->replies()->whereNull('parent_id')->get();
-        $post->load('user');
-
-       return view('replies', [
-
-        'post' => $post,
-        'replies' => $replies
-
-       ]);
-        */
 
         $post->load(['user', 'replies.user', 'replies.replies.user']);
 
@@ -113,6 +100,11 @@ class postController extends Controller
             ->pivot
             ->anonymous_username ?? 'Anonymous';
 
+            // Add the user's profile picture
+            $reply->profilePicture = $reply->user->profile_picture
+            ? asset('storage/' . $reply->user->profile_picture)
+            : asset('images/default-profile-pic.jpg');
+
         // Recursively calculate for nested replies
         $reply->replies = $reply->replies->map(function ($nestedReply) use ($post) {
             $nestedReply->anonymousUsername = $post->channel
@@ -122,6 +114,11 @@ class postController extends Controller
                 ->pivot
                 ->anonymous_username ?? 'Anonymous';
 
+
+                $nestedReply->profilePicture = $nestedReply->user->profile_picture
+                ? asset('storage/' . $nestedReply->user->profile_picture)
+                : asset('images/default-profile-pic.jpg');
+            
             return $nestedReply;
         });
 
@@ -130,7 +127,7 @@ class postController extends Controller
 
     return view('replies', [
         'post' => $post,
-        'replies' => $replies,
+        'replies' => $replies
     ]);
     }
 

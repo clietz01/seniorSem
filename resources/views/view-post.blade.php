@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :user="Auth::user()">
     <!DOCTYPE html>
     <html lang="en">
     <head>

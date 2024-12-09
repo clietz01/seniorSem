@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :user="Auth::user()">
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -24,17 +24,19 @@
         </div>
         <p id="demo"></p>
         <hr>
-        <h2>Create a Channel!</h2>
-        <form action="/createChannel" id="channel_creation" method="POST">
-            @csrf
-            <label for="name">Channel Title</label>
-            <input type="text" name="title">
-            <label for="slogan">Channel Slogan</label>
-            <input type="text" name="slogan">
-            <label for="description">Channel Description</label>
-            <textarea name="description" id="description" cols="30" rows="10"></textarea>
-            <button type="submit">Create Channel</button>
-        </form>
+        <div class="comment">
+            <h2>Create a Channel!</h2>
+            <form action="/createChannel" id="channel_creation" method="POST">
+                @csrf
+                <label for="name">Channel Title</label>
+                <input type="text" name="title">
+                <label for="slogan">Channel Slogan</label>
+                <input type="text" name="slogan">
+                <label for="description">Channel Description</label>
+                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                <button type="submit">Create Channel</button>
+            </form>
+        </div>
         <script>
             const x = document.getElementById("demo");
             function getLocation() {

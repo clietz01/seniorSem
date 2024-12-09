@@ -3,6 +3,7 @@
         <div class="comment-header">
             <p>Created by</p> 
             <p class="display-name">{{ $anonymousUsername }}</p>
+            <img src="{{ $reply->profilePicture }}" alt="User's Profile Picture" style="width: 40px; height: 40px; border-radius: 50%;">
         </div>
         <div id="comment-body-container">
             <div class="comment-body">

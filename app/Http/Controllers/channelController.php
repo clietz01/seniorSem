@@ -38,6 +38,9 @@ class channelController extends Controller
             #'user_id' => auth()->id() // Explicitly include user_id
         ]);
 
+        $this->ensureAnonymousUsername($newChannel->id);
+
+
         return view('view-channel', [
             'channel' => $newChannel,
             'posts' => $newChannel->post()->latest()->get()

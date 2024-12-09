@@ -4,6 +4,11 @@ h1, h2, h3, h4, p {
 
 body {
     background-color: rgb(45, 45, 45);
+    background: linear-gradient(45deg, #333333, #444444);
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
 }
 
 #signup input {
@@ -24,10 +29,14 @@ label {
 }
 
 .header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    background-color: #333333; /* Dark background for the header */
+    color: white;
     padding: 10px 20px;
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Align items to the left */
+    height: 70px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
 }
 
 .header img {
@@ -35,6 +44,7 @@ label {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    object-fit: cover;
 }
 
 form input, textarea, button {
@@ -44,6 +54,20 @@ form input, textarea, button {
 
 #login input, button {
     display: inline;
+}
+
+#logout {
+    background-color: #dc3545; /* Red button */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#logout:hover {
+    background-color: #a62430;
 }
 
 #logout, button, input[type="submit"] {
@@ -57,6 +81,7 @@ form input, textarea, button {
 
 a {
     color: #dc3545;
+    text-decoration: none;
 }
 
 #channel_title{
@@ -71,23 +96,26 @@ a {
 
 #main-container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     height: 100vh;
-}
-
-#display-half {
-    padding-left: 50px;
-    padding-top: 20%;
-    margin: auto;
-    height: 70vh;
-    border-left: 1px solid whitesmoke;
-    
-    
+    padding: 0 5%;
 }
 
 #setup-half, #display-half {
-    display: inline-block;
-    align-items: center;
+    flex: 1;
+    padding: 20px;
+}
+
+#display-half {
+    border-left: 1px solid whitesmoke;
+    text-align: center;
+}
+
+#setup-half {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #profile-pic {
@@ -98,18 +126,35 @@ a {
 #head-container {
     display: flex;
     align-items: center;
+    gap: 15px;
 }
 
-#footer-list li{
-    display: inline-block;
-    margin-right: 100px;
-    margin-top: 10%;
-}
-
-#footer-container {
-    width: 100%;
+footer {
+    background-color: #333333;
+    padding: 20px 0;
     text-align: center;
+    color: white;
 }
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+footer li a {
+    text-decoration: none;
+    color: #dc3545;
+    font-weight: bold;
+}
+
+footer li a:hover {
+    color: #a62430;
+}
+
 
 #timestamp p{
     margin-bottom: 20px;
@@ -207,4 +252,70 @@ button:hover {
     background-color: #202020;
     border-radius: 5px;
     border: 1px solid #ccc;
+}
+
+form {
+    background-color: #333333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+form input, form button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+}
+
+form input {
+    background-color: #222222;
+    color: white;
+}
+
+form input:focus {
+    outline: none;
+    border: 1px solid #dc3545;
+}
+
+form button {
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #a62430;
+}
+
+.profile-container {
+    display: flex;
+    align-items: stretch; /* Ensure both sections stretch to the same height */
+    gap: 20px; /* Add space between buttons and the image */
+}
+
+#profile-options {
+    display: flex;
+    flex-direction: column; /* Stack the buttons vertically */
+    justify-content: space-around; /* Space buttons evenly */
+    flex: 1; /* Let it take proportional space */
+}
+
+#profile-shtuff {
+    flex: 1; /* Let it take proportional space */
+    display: flex;
+    align-items: center; /* Center the image vertically */
+    justify-content: center; /* Center the image horizontally */
+}
+
+#profile-shtuff #profile-pic {
+    max-height: 100%; /* Let the image stretch vertically */
+    width: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    max-width: 150px; /* Ensure it doesn’t get too wide */
+    height: 120px; /* Increase the image height */
+    object-fit: cover; /* Ensure the image is cropped correctly if needed */
 }

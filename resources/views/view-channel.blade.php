@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :user="Auth::user()">
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -9,10 +9,14 @@
         <link rel="stylesheet" href="{{asset('css/styles.css')}}">
     </head>
     <body>
-        <h1>Welcome to <div id="channel_title">{{$channel->title}}</div></h1>
-        <div id="options">
-            <p>{{$channel->description}}</p>
-            <a href="/channel"><button>Return to Channel Selection</button></a>
+        <div class="comment">
+            <h1>Welcome to <div id="channel_title">{{$channel->title}}</div></h1>
+            <div id="options">
+                <div class="comment">
+                    <p>{{$channel->description}}</p>
+                    <a href="/channel"><button>Return to Channel Selection</button></a>
+                </div>
+            </div>
         </div>
         <hr>
         <h2>Posts in {{$channel->title}}:</h2>
@@ -27,16 +31,18 @@
             @endif
         </ul>
         <hr>
-        <h2>Add a post to <div id="channel_title">{{$channel->title}}</div></h2>
-        <h1 id="channel_slogan">{{$channel->slogan}}</h1>
-        <form action="{{ route('posts.store', ['channel' => $channel->id]) }}" method="POST" id="mainPost">
-            @csrf
-            <label for="title">Title</label>
-            <input type="text" name="title">
-            <label for="body">Body</label>
-            <textarea name="body" id="userInput" rows="10" cols="50">Share something!</textarea>
-            <button type="submit">Post</button>
-        </form>
+        <div class="comment">
+            <h2>Add a post to <div id="channel_title">{{$channel->title}}</div></h2>
+            <h1 id="channel_slogan">{{$channel->slogan}}</h1>
+            <form action="{{ route('posts.store', ['channel' => $channel->id]) }}" method="POST" id="mainPost">
+                @csrf
+                <label for="title">Title</label>
+                <input type="text" name="title">
+                <label for="body">Body</label>
+                <textarea name="body" id="userInput" rows="10" cols="50">Share something!</textarea>
+                <button type="submit">Post</button>
+            </form>
+        </div>
     </body>
     </html>
 </x-layout>

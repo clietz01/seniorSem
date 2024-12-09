@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request; 
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class userController extends Controller
 {
@@ -80,6 +81,36 @@ class userController extends Controller
             'postCount' => $postCount,
             'channels' => $channels
         ]);
+    }
+
+    public function editProfile()
+    {
+        return view('profile.edit', ['user' => Auth::user()]);
+    }
+
+    public function updateProfilePicture(Request $request)
+    {
+        $request->validate([
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->hasFile('profile_picture')) {
+            // Store the uploaded file
+            $filePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+
+            // Delete the old profile picture if it exists
+            if ($user->profile_picture) {
+                Storage::disk('public')->delete($user->profile_picture);
+            }
+
+            // Update the user's profile picture
+            $user->profile_picture = $filePath;
+            $user->save();
+        }
+
+        return redirect()->route('profile.edit')->with('success', 'Profile picture updated successfully.');
     }
 
 }
