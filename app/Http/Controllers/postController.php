@@ -28,7 +28,7 @@ class postController extends Controller
             'title' => $incoming_fields['title'],
             'body' => $incoming_fields['body'],
             'user_id' => $incoming_fields['user_id'], // Include user_id here
-            'channel_id' => $channel->id 
+            'channel_id' => $channel->id
         ]);
 
         $replies = $newPost->replies()->get();
@@ -60,17 +60,17 @@ class postController extends Controller
 
 
     public function update(Request $request, post $post){
-        
+
         $request->validate(
             [
                 'body' => 'required|string'
-                
+
                 ]
         );
 
         $post->body = $request->input('body');
         $post->save();
-        
+
 
         return response()->json(['success' => true]);
     }
@@ -91,8 +91,9 @@ class postController extends Controller
 
     $replies = $post->replies()->whereNull('parent_id')->get();
 
-    // Calculate anonymous usernames for replies
-    $replies = $replies->map(function ($reply) use ($post) {
+    function assignAnonymousUsername($reply, $post)
+    {
+        // Assign anonymous username
         $reply->anonymousUsername = $post->channel
             ->users()
             ->where('users.id', $reply->user_id)
@@ -100,29 +101,24 @@ class postController extends Controller
             ->pivot
             ->anonymous_username ?? 'Anonymous';
 
-            // Add the user's profile picture
-            $reply->profilePicture = $reply->user->profile_picture
+        // Assign profile picture
+        $reply->profilePicture = $reply->user->profile_picture
             ? asset('storage/' . $reply->user->profile_picture)
             : asset('images/default-profile-pic.jpg');
 
-        // Recursively calculate for nested replies
-        $reply->replies = $reply->replies->map(function ($nestedReply) use ($post) {
-            $nestedReply->anonymousUsername = $post->channel
-                ->users()
-                ->where('users.id', $nestedReply->user_id)
-                ->first()
-                ->pivot
-                ->anonymous_username ?? 'Anonymous';
-
-
-                $nestedReply->profilePicture = $nestedReply->user->profile_picture
-                ? asset('storage/' . $nestedReply->user->profile_picture)
-                : asset('images/default-profile-pic.jpg');
-            
-            return $nestedReply;
-        });
+        // Recursively process all replies
+        if ($reply->replies->isNotEmpty()) {
+            $reply->replies = $reply->replies->map(function ($nestedReply) use ($post) {
+                return assignAnonymousUsername($nestedReply, $post);
+            });
+        }
 
         return $reply;
+    }
+
+    // Apply function recursively to all replies
+    $replies = $replies->map(function ($reply) use ($post) {
+        return assignAnonymousUsername($reply, $post);
     });
 
     return view('replies', [
@@ -172,13 +168,13 @@ class postController extends Controller
         $request->validate([
             'content' => 'required|string',
         ]);
-    
+
         $newReply = $reply->replies()->create([
             'content' => $request->content,
             'user_id' => auth()->id(),
             'post_id' => $reply->post_id
         ]);
-    
+
         return response()->json([
             'id' => $newReply->id,
             'content' => $newReply->content,
@@ -191,4 +187,3 @@ class postController extends Controller
     }
 
 }
-    
