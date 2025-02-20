@@ -32,5 +32,6 @@ Route::post('/replies/{reply}/reply', [postController::class, 'storeNestedReply'
 
 //channelController routes
 Route::get('/channel', [channelController::class, 'channelScreen']);
+Route::post('/channels/location', [channelController::class, 'getChannelsByLocation']);
 Route::post('/createChannel', [channelController::class, 'createChannel']);
 Route::get('/channels/{channel}', [channelController::class, 'viewChannel'])->name('channels.show');

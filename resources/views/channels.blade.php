@@ -38,6 +38,7 @@
             </form>
         </div>
         <script>
+            /*
             const x = document.getElementById("demo");
             function getLocation() {
             if (navigator.geolocation) {
@@ -51,6 +52,31 @@
             x.innerHTML = "Latitude: " + position.coords.latitude +
             "<br>Longitude: " + position.coords.longitude;
             }
+            */
+
+            navigator.geolocation.getCurrentPosition(position => {
+                const {latitude, longitude} = position.coords;
+
+                fetch('/channels/location', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ latitude, longitude})
+                })
+                .then(response = response.json())
+                .then(channels => {
+                    let channelList = document.getElementById('channel-list');
+                    channelList.innerHTML = '';
+
+
+                    channels.array.forEach(channel => {
+                        let li = document.createElement('li');
+                        li.textContent = channel.name;
+                        channelList.appendChild(li);
+                    });
+                });
+            }, error => {
+                console.error("Geolocation Error: ", error);
+            });
         </script>
     </body>
     </html>

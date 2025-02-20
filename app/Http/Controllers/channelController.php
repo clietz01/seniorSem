@@ -11,6 +11,30 @@ use App\Models\post;
 class channelController extends Controller
 {
     //
+
+    public function getChannelsByLocation(Request $request){
+
+        $userLat = $request->input('latitude');
+        $userLng = $request->input('longitude');
+
+        if (!$userLat || !$userLng){
+
+            return response()->json(['error' => 'Location is required'], 400);
+        }
+
+        $channels = Channel::all()->filter(function ($channel) use ($userLat, $userLng){
+            return $channel->isWithinRadius($userLat, $userLng);
+        });
+
+        return response()->json($channels);
+
+    }
+
+
+
+
+
+
     public function channelScreen(){
 
         $channels = channel::all();
@@ -61,18 +85,18 @@ class channelController extends Controller
                 'user_id' => $post->user_id,
                 'channel_id' => $post->channel_id,
                 'anonymousUsername' => $post->anonymousUsername ?? 'N/A',
-            ]); 
+            ]);
         }
-    
+
         $postCount = $channel->post()->count();
-    
+
         $user = Auth::user();
         $anonymousUsername = $user->channels()
             ->where('channel_id', $channel->id)
             ->first()
             ->pivot
             ->anonymous_username;
-    
+
         return view('view-channel', [
             'channel' => $channel,
             'posts' => $posts,
