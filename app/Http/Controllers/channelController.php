@@ -14,19 +14,32 @@ class channelController extends Controller
 
     public function getChannelsByLocation(Request $request){
 
-        $userLat = $request->input('latitude');
-        $userLng = $request->input('longitude');
+        try {
+            $userLat = $request->input('latitude');
+            $userLng = $request->input('longitude');
 
-        if (!$userLat || !$userLng){
+            if (!$userLat || !$userLng) {
+                return response()->json(['error' => 'Location is required'], 400);
+            }
 
-            return response()->json(['error' => 'Location is required'], 400);
+            $radius = 10; // Default search radius (km)
+
+            // Haversine Formula to filter nearby channels
+            $channels = Channel::selectRaw("
+                id, name, description, latitude, longitude, radius,
+                (6371 * acos(cos(radians(?)) * cos(radians(latitude)) *
+                cos(radians(longitude) - radians(?)) + sin(radians(?)) *
+                sin(radians(latitude)))) AS distance
+            ", [$userLat, $userLng, $userLat])
+            ->having('distance', '<=', $radius)
+            ->orderBy('distance', 'asc')
+            ->get();
+
+            return response()->json($channels);
+        } catch (\Exception $e) {
+            \Log::error("Error in getChannelsByLocation: " . $e->getMessage());
+            return response()->json(['error' => 'Server Error'], 500);
         }
-
-        $channels = Channel::all()->filter(function ($channel) use ($userLat, $userLng){
-            return $channel->isWithinRadius($userLat, $userLng);
-        });
-
-        return response()->json($channels);
 
     }
 
@@ -46,7 +59,7 @@ class channelController extends Controller
     }
 
     public function createChannel(Request $request){
-
+        /*
         $incomingFields = $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -69,6 +82,25 @@ class channelController extends Controller
             'channel' => $newChannel,
             'posts' => $newChannel->post()->latest()->get()
         ]);
+        */
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'radius' => 'required|numeric|min:1|max:100'
+        ]);
+
+        $channel = Channel::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'radius' => $request->radius
+        ]);
+
+        return response()->json(['message' => 'Channel created successfully', 'channel' => $channel]);
 
     }
 
