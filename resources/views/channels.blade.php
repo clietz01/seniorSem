@@ -63,6 +63,8 @@
             "<br>Longitude: " + position.coords.longitude;
             }
             */
+            let channelList = document.getElementById('channel-list');
+            let fetchedChannels = [];
 
 
             document.getElementById('channel_creation').addEventListener('submit', function(event) {
@@ -93,6 +95,10 @@
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('status-message').innerText = data.message;
+
+                        //add new channel to the stored channelList
+                        fetchedChannels.push(data.channel);
+                        updateChannelList();
                     })
                     .catch(error => console.error('Error: ', error));
                 }, error => {
@@ -100,6 +106,7 @@
                 });
 
             });
+
 
             document.addEventListener("DOMContentLoaded", function() {
 
@@ -117,26 +124,37 @@
                 })
                 .then(response => response.json())
                 .then(channels => {
-                    let channelList = document.getElementById('channel-list');
-                    channelList.innerHTML = '';
+                    console.log("Fetched Channels: ", channels)
+                    fetchedChannels = channels;
+                    updateChannelList();
 
-                    if (channels.length == 0){
-                        channelList.innerHTML = "<li>No Channels found in your area.</li>";
-                    }
 
-                    channels.forEach(channel => {
-                        let li = document.createElement('li');
-                        let a = document.createElement('a');
-                        a.href = "/channels/" + channel.id;
-                        a.textContent = channel.name;
-                        li.appendChild(a);
-                        channelList.appendChild(li);
-                    });
                 }).catch(error => console.error("Error fetching channels: ", error));
             }, error => {
                 console.error("Geolocation Error: ", error);
             });
         });
+
+
+        function updateChannelList(){
+            channelList.innerHTML = '';
+
+            if (fetchedChannels.length == 0){
+                    channelList.innerHTML = "<li>No Channels found in your area.</li>";
+                    return;
+                }
+
+
+            fetchedChannels.forEach(channel => {
+
+                let li = document.createElement('li');
+                let a = document.createElement('a');
+                a.href = "/channels/" + channel.id;
+                a.textContent = channel.name;
+                li.appendChild(a)
+                channelList.appendChild(li);
+            })
+        }
 
         </script>
     </body>

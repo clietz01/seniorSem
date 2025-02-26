@@ -28,13 +28,16 @@ class channelController extends Controller
             // Haversine Formula to filter nearby channels
             $channels = Channel::selectRaw("
                 id, title, slogan, description, latitude, longitude, radius,
-                (6371 * acos(cos(radians(?)) * cos(radians(latitude)) *
+                ROUND((6371 * acos(cos(radians(?)) * cos(radians(latitude)) *
                 cos(radians(longitude) - radians(?)) + sin(radians(?)) *
-                sin(radians(latitude)))) AS distance
+                sin(radians(latitude)))), 2) AS distance
             ", [$userLat, $userLng, $userLat])
             ->having('distance', '<=', $radius)
             ->orderBy('distance', 'asc')
             ->get();
+
+            \Log::info("User Location: ", ['latitude' => $userLat, 'longitude' => $userLng]);
+            \Log::info("Channels fetched: ", ['channels' => $channels->toArray()]);
 
             return response()->json($channels);
         } catch (\Exception $e) {
