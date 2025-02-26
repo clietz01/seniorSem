@@ -7,6 +7,7 @@ use App\Models\channel;
 use Illuminate\Broadcasting\Channel as BroadcastingChannel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\post;
+use Exception;
 
 class channelController extends Controller
 {
@@ -26,7 +27,7 @@ class channelController extends Controller
 
             // Haversine Formula to filter nearby channels
             $channels = Channel::selectRaw("
-                id, name, description, latitude, longitude, radius,
+                id, title, slogan, description, latitude, longitude, radius,
                 (6371 * acos(cos(radians(?)) * cos(radians(latitude)) *
                 cos(radians(longitude) - radians(?)) + sin(radians(?)) *
                 sin(radians(latitude)))) AS distance
@@ -84,8 +85,11 @@ class channelController extends Controller
         ]);
         */
 
+        try {
+
         $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'slogan' => 'string|max:255',
             'description' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
@@ -93,7 +97,8 @@ class channelController extends Controller
         ]);
 
         $channel = Channel::create([
-            'name' => $request->name,
+            'title' => $request->title,
+            'slogan' => $request->slogan,
             'description' => $request->description,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
@@ -101,6 +106,12 @@ class channelController extends Controller
         ]);
 
         return response()->json(['message' => 'Channel created successfully', 'channel' => $channel]);
+
+    } catch (Exception $e){
+        \Log::error("Error in createChannel: " . $e->getMessage());
+    }
+
+    return response()->json(['error' => 'Server error', 'message' => $e->getMessage()], 500);
 
     }
 

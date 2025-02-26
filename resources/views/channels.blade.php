@@ -31,12 +31,12 @@
             <h3>This channel will only be available at your current position.</h3>
             <form action="/createChannel" id="channel_creation" method="POST">
                 @csrf
-                <label for="name">Channel Title</label>
+                <label for="title">Channel Title</label>
                 <input type="text" name="title">
                 <label for="slogan">Channel Slogan</label>
                 <input type="text" name="slogan">
-                <label for="visibility">Visibility Radius (km):</label>
-                <input type="number" id="radius" name="visibility" min="1" max="100" required>
+                <label for="radius">Visibility Radius (km):</label>
+                <input type="number" id="radius" name="radius" min="1" max="100" required>
                 <label for="description">Channel Description</label>
                 <textarea name="description" id="description" cols="30" rows="10"></textarea>
 
