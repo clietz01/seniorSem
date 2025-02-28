@@ -23,7 +23,26 @@ class channelController extends Controller
                 return response()->json(['error' => 'Location is required'], 400);
             }
 
-            $radius = 10; // Default search radius (km)
+        $maxRadius = Channel::max('radius');
+
+
+
+        if (!$maxRadius){
+            $maxRadius = 10; // Search radius in km
+        }
+        $earthRadius = 6371; // Earth radius in km
+
+        // Calculate bounding box to optimize the search
+        $latDiff = rad2deg($maxRadius / $earthRadius);
+        $lngDiff = rad2deg($maxRadius / ($earthRadius * cos(deg2rad($userLat))));
+
+        $minLat = $userLat - $latDiff;
+        $maxLat = $userLat + $latDiff;
+        $minLng = $userLng - $lngDiff;
+        $maxLng = $userLng + $lngDiff;
+
+        // Log user coordinates for debugging
+        \Log::info("User Location:", ['latitude' => $userLat, 'longitude' => $userLng]);
 
             // Haversine Formula to filter nearby channels
             $channels = Channel::selectRaw("
@@ -33,6 +52,8 @@ class channelController extends Controller
             * cos(radians(longitude) - radians(?))
             + sin(radians(?)) * sin(radians(latitude))
             )) AS distance", [$userLat, $userLng, $userLat])
+            ->whereBetween('latitude', [$minLat, $maxLat])
+            ->whereBetween('longitude', [$minLng, $maxLng])
             ->orderBy('distance', 'asc')
             ->get();
 
