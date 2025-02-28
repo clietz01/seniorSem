@@ -27,19 +27,37 @@ class channelController extends Controller
 
             // Haversine Formula to filter nearby channels
             $channels = Channel::selectRaw("
-                id, title, slogan, description, latitude, longitude, radius,
-                ROUND((6371 * acos(cos(radians(?)) * cos(radians(latitude)) *
-                cos(radians(longitude) - radians(?)) + sin(radians(?)) *
-                sin(radians(latitude)))), 2) AS distance
-            ", [$userLat, $userLng, $userLat])
-            ->having('distance', '<=', $radius)
+            id, title, slogan, description, latitude, longitude, radius,
+            (6371 * acos(
+            cos(radians(?)) * cos(radians(latitude))
+            * cos(radians(longitude) - radians(?))
+            + sin(radians(?)) * sin(radians(latitude))
+            )) AS distance", [$userLat, $userLng, $userLat])
             ->orderBy('distance', 'asc')
             ->get();
 
-            \Log::info("User Location: ", ['latitude' => $userLat, 'longitude' => $userLng]);
-            \Log::info("Channels fetched: ", ['channels' => $channels->toArray()]);
 
-            return response()->json($channels);
+            // Log each channel with its computed distance
+            foreach ($channels as $channel) {
+            \Log::info("Channel Found: ", [
+                'id' => $channel->id,
+                'title' => $channel->title,
+                'distance' => $channel->distance,
+                'radius' => $channel->radius
+            ]);
+        }
+
+        // Filter within the distance range manually in PHP
+        $filteredChannels = $channels->filter(function ($channel) {
+            return $channel->distance <= floatval($channel->radius);
+        })->values();
+
+
+        \Log::info("Filtered Channels: ", ['channels' => $filteredChannels->toArray()]);
+
+        return response()->json($filteredChannels);
+
+
         } catch (\Exception $e) {
             \Log::error("Error in getChannelsByLocation: " . $e->getMessage());
             return response()->json(['error' => 'Server Error'], 500);

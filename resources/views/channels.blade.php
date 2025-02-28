@@ -137,6 +137,8 @@
 
 
         function updateChannelList(){
+
+            console.log("Updating channel list...", fetchedChannels);
             channelList.innerHTML = '';
 
             if (fetchedChannels.length == 0){
@@ -150,10 +152,12 @@
                 let li = document.createElement('li');
                 let a = document.createElement('a');
                 a.href = "/channels/" + channel.id;
-                a.textContent = channel.name;
+                a.textContent = channel.title;
                 li.appendChild(a)
                 channelList.appendChild(li);
             })
+
+            console.log("Final Channel List: ", channelList);
         }
 
         </script>
