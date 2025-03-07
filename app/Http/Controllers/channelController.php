@@ -23,13 +23,9 @@ class channelController extends Controller
                 return response()->json(['error' => 'Location is required'], 400);
             }
 
-        $maxRadius = Channel::max('radius');
+        $maxRadius = $request->input('radius') ?? Channel::max('radius') ?? 10;
+        \DB::enableQueryLog();
 
-
-
-        if (!$maxRadius){
-            $maxRadius = 10; // Search radius in km
-        }
         $earthRadius = 6371; // Earth radius in km
 
         // Calculate bounding box to optimize the search
@@ -46,16 +42,21 @@ class channelController extends Controller
 
             // Haversine Formula to filter nearby channels
             $channels = Channel::selectRaw("
-            id, title, slogan, description, latitude, longitude, radius,
-            (6371 * acos(
-            cos(radians(?)) * cos(radians(latitude))
-            * cos(radians(longitude) - radians(?))
-            + sin(radians(?)) * sin(radians(latitude))
-            )) AS distance", [$userLat, $userLng, $userLat])
-            ->whereBetween('latitude', [$minLat, $maxLat])
-            ->whereBetween('longitude', [$minLng, $maxLng])
-            ->orderBy('distance', 'asc')
-            ->get();
+    id, title, slogan, description, latitude, longitude, radius,
+    (6371 * acos(
+    cos(radians(?)) * cos(radians(latitude))
+    * cos(radians(longitude - ?))
+    + sin(radians(?)) * sin(radians(latitude))
+    )) AS distance
+    ", [$userLat, $userLng, $userLat])
+        ->whereBetween('latitude', [$minLat, $maxLat])
+        ->whereBetween('longitude', [$minLng, $maxLng])
+        ->orderBy('distance', 'asc')
+        ->get();
+
+        \Log::info("Final SQL Query: ", [
+            'query' => \DB::getQueryLog()
+        ]);
 
 
             // Log each channel with its computed distance
@@ -70,7 +71,7 @@ class channelController extends Controller
 
         // Filter within the distance range manually in PHP
         $filteredChannels = $channels->filter(function ($channel) {
-            return $channel->distance <= floatval($channel->radius);
+            return floatval($channel->distance) <= floatval($channel->radius);
         })->values();
 
 

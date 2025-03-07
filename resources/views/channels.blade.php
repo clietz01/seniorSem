@@ -80,6 +80,8 @@
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
 
+                    console.log("user position found: ", latitude, longitude);
+
                     document.getElementById('latitude').value = latitude;
                     document.getElementById('longitude').value = longitude;
 

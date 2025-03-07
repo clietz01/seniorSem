@@ -10,6 +10,11 @@ class channel extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'description', 'slogan', 'latitude', 'longitude', 'radius'];
+    protected $casts = [
+        'latitude'  => 'float',
+        'longitude' => 'float',
+        'radius'    => 'float',
+    ];
 
     public function post(){
         return $this->hasMany(post::class);
