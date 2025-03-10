@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; 
 use App\Models\User;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Mail;
 
 class userController extends Controller
 {
@@ -15,8 +18,8 @@ class userController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required',
-            'password' => 'required|confirmed'
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed|min:10'
         ]);
 
         if ($validator->fails()) {
@@ -27,11 +30,18 @@ class userController extends Controller
 
         $incomingfields['password'] = bcrypt($incomingfields['password']);
 
-        User::create($incomingfields);
+        $user = User::create($incomingfields);
+
+        Mail::raw('Manual test after registration', function ($message) use ($user) {
+            $message->to($user->email)->subject('Manual Test');
+        });
+
+        event(new Registered($user));
+
+        Auth::login($user);
 
         //log user in after registering 
-        session()->regenerate();
-        return redirect('/')->with('success', 'Registration Successful!');
+        return redirect()->route('verification.notice')->with('success', 'Registration Successful! Please check your email to verify your account!');
     }
 
     public function login(Request $request){

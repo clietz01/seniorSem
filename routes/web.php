@@ -4,6 +4,8 @@ use App\Http\Controllers\channelController;
 use App\Http\Controllers\postController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use App\Models\post;
 
 Route::get('/', function () {
@@ -29,9 +31,33 @@ Route::post('/{post}/createReply', [postController::class, 'createReply'])->name
 Route::get('/posts/delete/{post}', [postController::class, 'deletePost']);
 Route::put('/posts/replies/{reply}', [postController::class, 'updateReply']);
 Route::post('/replies/{reply}/reply', [postController::class, 'storeNestedReply'])->name('nestedReply');
+Route::post('/posts/{post}/like', [postController::class, 'likePost'])->middleware('auth');
 
 //channelController routes
 Route::get('/channel', [channelController::class, 'channelScreen']);
 Route::post('/channels/location', [channelController::class, 'getChannelsByLocation']);
 Route::post('/createChannel', [channelController::class, 'createChannel'])->name('channels.create');
 Route::get('/channels/{channel}', [channelController::class, 'viewChannel'])->name('channels.show');
+
+
+//email auth
+Route::get('/email/verify', function (Request $request) {
+
+    if (!$request->user()->hasVerifiedEmail()) {
+        $request->user()->sendEmailVerificationNotification();
+    }
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/return/{user}');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

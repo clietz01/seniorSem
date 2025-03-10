@@ -28,4 +28,16 @@ class post extends Model
         where('users.id', $this->user_id)->
         first()->pivot->anonymous_username ?? 'Anonymous';
     }
+
+    public function likes(){
+        return $this->hasMany(Postlike::class);
+    }
+
+    public function isLikedByBuyer($userId){
+
+        return $this->like()->where('user_id', $userId)->exists();
+
+    
+    }
+
 }

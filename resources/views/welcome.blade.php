@@ -58,8 +58,7 @@
         <ul>
             <li><a href="https://github.com/clietz01">Github</a></li>
             <li><a href="https://www.linkedin.com/in/christian-lietz-76a36822a/">LinkedIn</a></li>
-            <li><a href="#">Placeholder</a></li>
-            <li><a href="#">Placeholder</a></li>
+            <li><a href="#">Support</a></li>
         </ul>
     </footer>
 </body>

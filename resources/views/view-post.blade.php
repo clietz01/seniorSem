@@ -15,12 +15,20 @@
             @if(auth()->check() && auth()->user()->id == $post->user_id)
                 <div id="post-container">
                     <p id="post-body">{{$post->body}}</p>
-                    <button id="edit-post-button" data-post-id="{{$post->id}}">Edit Post</button>
-                    <a href="/posts/delete/{{$post->id}}"><button id="delete-post-button">Delete Post</button></a>
-                    <div id="repost-button"></div>
+                </div>
+                <div class="comment">
+                    <span class="like-count">{{ $post->likes ?? 0 }}</span> ❤️
+                        <button id="edit-post-button" data-post-id="{{$post->id}}">Edit Post</button>
+                        <a href="/posts/delete/{{$post->id}}"><button id="delete-post-button">Delete Post</button></a>
+                        <div id="repost-button"></div>
                 </div>
                 @else
                 <p id="post-body">{{$post->body}}</p>
+                <div class="comment">
+                    <button class="like-btn" data-post-id="{{ $post->id }}">
+                        <span class="like-count">{{ $post->likes ?? 0 }}</span> ❤️
+                    </button>
+                </div>
                 <a href="/reply/{{$post->id}}"><button id="reply-button">Reply</button></a>
             @endif
         </div>
@@ -64,6 +72,39 @@
         </div>
 
         <script src="{{asset('js/view-post.js')}}"></script>
+        <script>
+     document.addEventListener("DOMContentLoaded", function () {
+    let likeButtons = document.querySelectorAll(".like-btn");
+
+    if (likeButtons.length > 0) {
+        likeButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                let postId = this.dataset.postId;
+                let likeCountElem = this.querySelector(".like-count");
+
+                fetch(`/posts/${postId}/like`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.liked !== undefined) {
+                        likeCountElem.textContent = data.likes;
+                    } else {
+                        console.error("Unexpected response:", data);
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            });
+        });
+    } else {
+        console.warn("No like buttons found on this page.");
+    }
+});
+        </script>
     </body>
     </html>
 </x-layout>

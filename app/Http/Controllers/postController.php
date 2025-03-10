@@ -6,6 +6,7 @@ use App\Models\channel;
 use Illuminate\Http\Request;
 use App\Models\post;
 use App\Models\reply;
+use App\Models\PostLike;
 use Illuminate\Support\Facades\Redirect;
 
 class postController extends Controller
@@ -28,7 +29,8 @@ class postController extends Controller
             'title' => $incoming_fields['title'],
             'body' => $incoming_fields['body'],
             'user_id' => $incoming_fields['user_id'], // Include user_id here
-            'channel_id' => $channel->id
+            'channel_id' => $channel->id,
+            'likes' => 0
         ]);
 
         $replies = $newPost->replies()->get();
@@ -74,6 +76,43 @@ class postController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+
+
+    public function likePost(Request $request, $postId){
+  // Check if user is authenticated
+        if (!auth()->check()) {
+        return response()->json(['error' => 'User not authenticated'], 401);
+    }
+
+        $post = Post::findOrFail($postId);
+        $user = auth()->user();
+
+        // Check if the user already liked this post
+        $existingLike = PostLike::where('post_id', $postId)->where('user_id', $user->id)->first();
+    
+        if ($existingLike) {
+            // Unlike: Delete the like entry and decrement the like count
+            $existingLike->delete();
+            $post->decrement('likes');
+    
+            return response()->json([
+                'liked' => false,
+                'likes' => $post->likes
+            ]);
+        } else {
+            // Like: Insert into post_likes and increment the like count
+            PostLike::create(['post_id' => $postId, 'user_id' => $user->id]);
+            $post->increment('likes');
+    
+            return response()->json([
+                'liked' => true,
+                'likes' => $post->likes
+            ]);
+        }
+        
+    }
+
 
 
     public function deletePost(post $post){

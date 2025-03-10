@@ -3,6 +3,14 @@ const editButton = document.getElementById('edit-post-button');
 const body = document.getElementById('post-body');
 const postId = editButton.dataset.postId;
 
+document.addEventListener("DOMContentLoaded", function() {
+
+  
+  if (editButton) {
+      const postContainer = document.getElementById('post-container');
+      const body = document.getElementById('post-body');
+      const postId = editButton.dataset.postId;
+
 editButton.addEventListener('click', () => {
   const text = body.textContent;
 
@@ -52,3 +60,5 @@ editButton.addEventListener('click', () => {
   postContainer.appendChild(postButton);
 
 });
+
+  }});

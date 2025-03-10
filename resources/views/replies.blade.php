@@ -20,10 +20,15 @@
          alt="User's Profile Picture" 
          style="width: 40px; height: 40px; border-radius: 50%;">
         </div>
-        <a href="/posts/{{ $post->id }}" id="title-back-link">
-            <h1>{{ $post->title }}</h1>
-        </a>
-        <h3>{{ $post->body }}</h3>
+        <div class="comment">
+            <a href="/posts/{{ $post->id }}" id="title-back-link">
+                <h1>{{ $post->title }}</h1>
+            </a>
+            <h3>{{ $post->body }}</h3>
+            <div class="comment">
+                {{$post->likes}} ❤️
+            </div>
+        </div>
         
         <hr>
         <h2>Reply to post:</h2>

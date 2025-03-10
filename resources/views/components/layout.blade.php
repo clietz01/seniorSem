@@ -25,8 +25,7 @@
             <ul id="footer-list">
                 <li><h3><a href="https://github.com/clietz01" target="_blank">Github</a></h3></li>
                 <li><h3><a href="https://www.linkedin.com/in/christian-lietz-76a36822a/" target="_blank">LinkedIn</a></h3></li>
-                <li><h3><a href="#">Placeholder</a></h3></li>
-                <li><h3><a href="#">Placeholder</a></h3></li>
+                <li><h3><a href="/">Support</a></h3></li>
             </ul>
         </div>
     </footer>
