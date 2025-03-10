@@ -52,7 +52,7 @@ Route::get('/email/verify', function (Request $request) {
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
-    return redirect('/return/{user}');
+    return redirect('/')->with('message', 'Account Verified!');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 

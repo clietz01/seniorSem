@@ -55,6 +55,12 @@ class userController extends Controller
                              'password' => $incomingfields['loginpassword']
                              ])){
 
+        // Check if verified
+        if (!auth()->user()->hasVerifiedEmail()) {
+            auth()->logout();
+            return redirect('/')
+                ->with('failure', 'You must verify your email before logging in!');
+        }
             session()->regenerate();
             $user = auth()->user()->load(['posts']); // Eager load relationships
             $postCount = $user->posts()->count(); //get amount of user posts

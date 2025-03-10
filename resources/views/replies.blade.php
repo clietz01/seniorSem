@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Replies</title>
-        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <link rel="stylesheet" href="{{ secure_asset('css/styles.css') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
@@ -44,8 +44,8 @@
                 @endforeach
             </ul>
         </div>
-        <script src="{{ asset('js/edit-reply.js') }}"></script>
-        <script src="{{ asset('js/reply-to-reply.js') }}"></script>
+        <script src="{{ secure_asset('js/edit-reply.js') }}"></script>
+        <script src="{{ secure_asset('js/reply-to-reply.js') }}"></script>
     </body>
     </html>
 </x-layout>

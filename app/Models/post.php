@@ -30,7 +30,7 @@ class post extends Model
     }
 
     public function likes(){
-        return $this->hasMany(Postlike::class);
+        return $this->hasMany(PostLike::class);
     }
 
     public function isLikedByBuyer($userId){
