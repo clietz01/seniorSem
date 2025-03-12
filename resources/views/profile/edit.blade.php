@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Replies</title>
-        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <link rel="stylesheet" href="{{secure_asset('css/styles.css') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <div>
@@ -14,7 +14,7 @@
             <div>{{ session('success') }}</div>
         @endif
 
-        <form action="{{ route('profile.updatePicture') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ secure_url(route('profile.updatePicture'))}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div>
                 <label for="profile_picture">Upload Profile Picture</label>

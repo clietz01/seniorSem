@@ -16,7 +16,7 @@
                 <p>Post created {{ $post->created_at }} by User</p>
             </div>
             <p class="display-name">{{ $post->anonymous_username ?? 'Anonymous'}}</p>
-            <img src="{{ $post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('images/default-profile-pic.jpg') }}" 
+            <img src="{{ $post->user->profile_picture ? secure_asset('storage/' . $post->user->profile_picture) : secure_asset('images/default-profile-pic.jpg') }}" 
          alt="User's Profile Picture" 
          style="width: 40px; height: 40px; border-radius: 50%;">
         </div>

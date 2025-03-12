@@ -8,6 +8,14 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Models\post;
 
+
+
+//support
+Route::get('/support', function(){
+	return view('supportPage');
+})->name('supportPage');
+
+
 Route::get('/', function () {
     return view('welcome');
 });
