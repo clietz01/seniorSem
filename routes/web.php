@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\feedbackController;
 use App\Models\post;
 
 
@@ -69,3 +70,14 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+
+
+//support Controller routes
+
+Route::get('/feedback', [feedbackController::class, 'showForm'])->name('feedback.form');
+Route::post('/feedback/send', [feedbackController::class, 'sendFeedback'])->name('feedback.send');
+Route::get('/support', function () {
+    return view('supportPage');
+})->name('support');

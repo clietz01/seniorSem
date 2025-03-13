@@ -58,7 +58,7 @@
         <ul>
             <li><a href="https://github.com/clietz01">Github</a></li>
             <li><a href="https://www.linkedin.com/in/christian-lietz-76a36822a/">LinkedIn</a></li>
-            <li><a href="/support">Support</a></li>
+            <li><a href="{{ route('support') }}">Support</a></li>
         </ul>
     </footer>
 </body>
