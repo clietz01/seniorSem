@@ -33,6 +33,9 @@ class feedbackController extends Controller
 
         return redirect()->back()->with('success', 'Your feedback has been sent successfully!');
     }
+
+
+    
 }
 
 

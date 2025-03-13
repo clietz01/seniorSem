@@ -25,26 +25,30 @@
         <p id="demo"></p>
         <hr><br>
         <h1>Or Make One!</h1>
-        <div class="comment">
-            <h2>Create a Local Channel!</h2>
-            <h3>This channel will only be available at your current position.</h3>
-            <form action="/createChannel" id="channel_creation" method="POST">
-                @csrf
-                <label for="title">Channel Title</label>
-                <input type="text" name="title">
-                <label for="slogan">Channel Slogan</label>
-                <input type="text" name="slogan">
-                <label for="radius">Visibility Radius (km):</label>
-                <input type="number" id="radius" name="radius" min="1" max="100" required>
-                <label for="description">Channel Description</label>
-                <textarea name="description" id="description" cols="30" rows="10"></textarea>
-
-                <input type="hidden" id="latitude" name="latitude">
-                <input type="hidden" id="longitude" name="longitude">
-
-                <button type="submit">Create Channel</button>
-            </form>
-            <p id="status-message"></p>
+        <div id="channel-creation-container">
+            <div class="comment">
+                <h2>Create a Local Channel!</h2>
+                <h3>This channel will only be available at your current position.</h3>
+                <form action="/createChannel" id="channel_creation" method="POST">
+                    @csrf
+                    <label for="title">Channel Title</label>
+                    <input type="text" name="title">
+                    <label for="slogan">Channel Slogan</label>
+                    <input type="text" name="slogan">
+                    <label for="radius">Visibility Radius (km):</label>
+                    <input type="number" id="radius" name="radius" min="1" max="100" required>
+                    <label for="description">Channel Description</label>
+                    <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                    <button type="submit">Create Channel</button>
+                </form>
+                <p id="status-message"></p>
+            </div>
+            <div class="comment" id="map-view">
+                <h2>Choose a Location:</h2>
+                <h3>Once created, a channel will only be available once you are within its range.</h3>
+            </div>
         </div>
         <script>
             /*

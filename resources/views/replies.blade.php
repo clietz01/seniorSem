@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Replies</title>
-        <link rel="stylesheet" href="{{ secure_asset('css/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
@@ -16,8 +16,8 @@
                 <p>Post created {{ $post->created_at }} by User</p>
             </div>
             <p class="display-name">{{ $post->anonymous_username ?? 'Anonymous'}}</p>
-            <img src="{{ $post->user->profile_picture ? secure_asset('storage/' . $post->user->profile_picture) : secure_asset('images/default-profile-pic.jpg') }}" 
-         alt="User's Profile Picture" 
+            <img src="{{ $post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('images/default-profile-pic.jpg') }}"
+         alt="User's Profile Picture"
          style="width: 40px; height: 40px; border-radius: 50%;">
         </div>
         <div class="comment">
@@ -29,7 +29,7 @@
                 {{$post->likes}} ❤️
             </div>
         </div>
-        
+
         <hr>
         <h2>Reply to post:</h2>
         <form action="{{ route('createReply', $post->id) }}" method="POST">

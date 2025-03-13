@@ -320,3 +320,15 @@ form button:hover {
     height: 120px; /* Increase the image height */
     object-fit: cover; /* Ensure the image is cropped correctly if needed */
 }
+
+#channel-creation-container {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 20px;
+}
+
+.comment #channel-creation-container {
+    width: 100%;
+}
