@@ -8,6 +8,17 @@
         <title>Channels</title>
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <style>
+            #map {
+                height: 400px; /* The height is 400 pixels */
+                width: 100%; /* The width is the width of the web page */
+            }
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
     </head>
 
 
@@ -48,24 +59,19 @@
             <div class="comment" id="map-view">
                 <h2>Choose a Location:</h2>
                 <h3>Once created, a channel will only be available once you are within its range.</h3>
+                <div id="map"><img src="" alt=""></div>
+                <div id="map-selection-menu">
+                    <h3>Create Channel Here:</h3>
+                    <h4 id="map-coords"></h4>
+                    <form action="#" method="POST">
+                        <button type="submit">Create Channel</button>
+                    </form>
+                </div>
             </div>
         </div>
-        <script>
-            /*
-            const x = document.getElementById("demo");
-            function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-            }
 
-            function showPosition(position) {
-            x.innerHTML = "Latitude: " + position.coords.latitude +
-            "<br>Longitude: " + position.coords.longitude;
-            }
-            */
+        <script>
+
             let channelList = document.getElementById('channel-list');
             let fetchedChannels = [];
 
@@ -119,6 +125,46 @@
 
             navigator.geolocation.getCurrentPosition(position => {
                 const {latitude, longitude} = position.coords;
+
+
+                 //maps API
+                 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+                key: "AIzaSyCBmIL_F09jGX25KejsG-BmjyzLzG2Mvbc",
+                v: "weekly",
+                // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+                // Add other bootstrap parameters as needed, using camel case.
+            });
+
+                // Initialize and add the map
+                // Initialize and add the map
+                let map;
+
+                async function initMap() {
+                // The location of Uluru
+                const position = { lat: latitude, lng: longitude };
+                // Request needed libraries.
+                //@ts-ignore
+                const { Map } = await google.maps.importLibrary("maps");
+                const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+                // The map, centered at Uluru
+                map = new Map(document.getElementById("map"), {
+                    zoom: 4,
+                    center: position,
+                    mapId: "DEMO_MAP_ID",
+                });
+
+                // The marker, positioned at Uluru
+                const marker = new AdvancedMarkerElement({
+                    map: map,
+                    position: position,
+                    title: "Current Location",
+                });
+                }
+
+                initMap();
+            //end of maps API
+
 
                 fetch('/channels/location', {
                     method: 'POST',
