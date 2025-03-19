@@ -332,3 +332,13 @@ form button:hover {
 .comment #channel-creation-container {
     width: 100%;
 }
+
+#selectionDetails {
+
+    display:flex;
+}
+
+#selectionDetails h3 {
+
+    margin-right: 1%;
+}

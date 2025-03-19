@@ -136,7 +136,7 @@ class channelController extends Controller
             'description' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'radius' => 'required|numeric|min:1|max:100'
+            'radius' => 'required|numeric|min:0|max:100'
         ]);
 
         $channel = Channel::create([
