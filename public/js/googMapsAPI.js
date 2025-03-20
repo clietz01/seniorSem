@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // The map, centered at Uluru
             map = new Map(document.getElementById("map"), {
-                zoom: 4,
+                zoom: 12,
                 center: position,
                 mapId: "DEMO_MAP_ID",
             });
@@ -51,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             });
 
+            document.getElementById("latitude").value = position.lat;
+            document.getElementById("longitude").value = position.lng;
+
             document.getElementById("radiusSlider").value = defaultRadius;
             document.getElementById("radiusValue").innerText = defaultRadius / 1000 + "km";
 
@@ -63,6 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 marker.position = e.latLng;
                 marker.title = "Selected Location";
                 circle.setCenter(e.latLng);
+
+                //update hidden input fields with new coordinates
+                document.getElementById("latitude").value = e.latLng.lat();
+                document.getElementById("longitude").value = e.latLng.lng();
+
                 mapSelection.innerHTML = "Latitude: " + marker.position.lat + ", Longitude: " + marker.position.lng;
             });
             window.updateRadius = function(value) {
@@ -72,6 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById("radiusValue").innerText = (radiusInMeters / 1000) + " km";
                 }
             };
+
+            document.getElementById("reset-pos").addEventListener("click", () => {
+
+                marker.position = position;
+                marker.title = "Current Location";
+                circle.setCenter(position);
+                mapSelection.innerHTML = "Latitude: " + marker.position.lat + ", Longitude: " + marker.position.lng;
+            });
 
 
             }

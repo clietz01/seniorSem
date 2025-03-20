@@ -52,6 +52,10 @@
                             @endforeach
                         @endif
                     </ul>
+                    <br>
+                </div>
+                <div id="user_likes">
+                    <h3>Total Likes: </h3>
                 </div>
             </div>
         </div>

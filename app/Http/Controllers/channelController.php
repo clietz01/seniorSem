@@ -136,7 +136,7 @@ class channelController extends Controller
             'description' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'radius' => 'required|numeric|min:0|max:100'
+            'radius' => 'required|numeric|min:0.1'
         ]);
 
         $channel = Channel::create([
@@ -148,7 +148,7 @@ class channelController extends Controller
             'radius' => $request->radius
         ]);
 
-        return response()->json(['message' => 'Channel created successfully', 'channel' => $channel]);
+        return redirect()->route('channels.show', ['message' => 'Channel created successfully', 'channel' => $channel]);
 
     } catch (Exception $e){
         \Log::error("Error in createChannel: " . $e->getMessage());

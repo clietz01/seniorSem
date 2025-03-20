@@ -321,17 +321,6 @@ form button:hover {
     object-fit: cover; /* Ensure the image is cropped correctly if needed */
 }
 
-#channel-creation-container {
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    gap: 20px;
-}
-
-.comment #channel-creation-container {
-    width: 100%;
-}
 
 #selectionDetails {
 
@@ -342,3 +331,26 @@ form button:hover {
 
     margin-right: 1%;
 }
+
+input[type="range"] {
+    accent-color: #dc3545; /* This changes the thumb and track to red */
+}
+
+
+#channel-header {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 20px;
+}
+
+.comment #channel-header {
+    width: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 20px;
+  }

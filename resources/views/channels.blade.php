@@ -37,6 +37,7 @@
         <hr><br>
         <h1>Or Make One!</h1>
         <div id="channel-creation-container">
+            <!--
             <div class="comment">
                 <h2>Create a Local Channel!</h2>
                 <h3>This channel will only be available at your current position.</h3>
@@ -56,6 +57,7 @@
                 </form>
                 <p id="status-message"></p>
             </div>
+        -->
             <div class="comment" id="map-view">
                 <h2>Choose a Location:</h2>
                 <h3>Once created, a channel will only be available once you are within its range.</h3>
@@ -66,7 +68,9 @@
                         <h4 id="map-coords"></h4>
                     </div>
 
-                    <form action="#" method="POST" id="manual-channel-creation">
+                    <a id="reset-pos"><button>Reset Marker</button></a>
+
+                    <form action="/createChannel" method="POST" id="channel-creation">
                         @csrf
                         <label for="title">Channel Title</label>
                         <input type="text" name="title">
@@ -74,11 +78,17 @@
                         <input type="text" name="slogan">
                         <label for="radius">Visibility Radius (km):</label>
                         <span id="radiusValue"></span>
-                        <input type="range" id="radiusSlider" min="100" max="100000" step="0.1" oninput="updateRadius(this.value)">
+                        <input type="range" id="radiusSlider" name="radius" min="100" max="50000" step="0.1" oninput="updateRadius(this.value)">
                         <label for="description">Channel Description</label>
                         <textarea name="description" id="description" cols="30" rows="10"></textarea>
+
+                        <!-- Hidden fields to store selected coordinates -->
+                        <input type="hidden" id="latitude" name="latitude">
+                        <input type="hidden" id="longitude" name="longitude">
+
                         <button type="submit">Create Channel</button>
                     </form>
+                    <p id="status-message"></p>
                 </div>
             </div>
         </div>
@@ -100,13 +110,15 @@
 
                 navigator.geolocation.getCurrentPosition(position => {
 
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
+                    //const latitude = position.coords.latitude;
+                    //const longitude = position.coords.longitude;
+
+
+
+                    const latitude = document.getElementById('latitude').innerText;
+                    const longitude = document.getElementById('longitude').innerText;
 
                     console.log("user position found: ", latitude, longitude);
-
-                    document.getElementById('latitude').value = latitude;
-                    document.getElementById('longitude').value = longitude;
 
                     const formData = new FormData(this);
 
