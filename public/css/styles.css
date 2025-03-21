@@ -156,14 +156,14 @@ footer li a:hover {
 }
 
 
-#timestamp p{
+#timestamp h3{
     margin-bottom: 20px;
     color: #dc3545;
 }
 
 #post-body {
-    margin-bottom: 10%;
-
+    padding: 15px;
+    background-color: #333333;
 }
 
 #post-container {
@@ -354,3 +354,12 @@ input[type="range"] {
     height: 400px;
     margin-bottom: 20px;
   }
+
+#post-options {
+
+    border: none;
+}
+
+#likes {
+    margin-left: 1%;
+}

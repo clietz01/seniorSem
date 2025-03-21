@@ -14,9 +14,9 @@
             <div id="timestamp"><p>Created {{$post->created_at}} by User {{$post->anonymousUsername}}</p></div>
             @if(auth()->check() && auth()->user()->id == $post->user_id)
                 <div id="post-container">
-                    <p id="post-body">{{$post->body}}</p>
+                    <h3 id="post-body">{{$post->body}}</h3>
                 </div>
-                <div class="comment">
+                <div class="comment" id="post-options">
                     <span class="like-count">{{ $post->likes ?? 0 }}</span> ❤️
                         <button id="edit-post-button" data-post-id="{{$post->id}}">Edit Post</button>
                         <a href="/posts/delete/{{$post->id}}"><button id="delete-post-button">Delete Post</button></a>

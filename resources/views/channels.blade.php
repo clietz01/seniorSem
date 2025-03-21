@@ -70,7 +70,7 @@
 
                     <a id="reset-pos"><button>Reset Marker</button></a>
 
-                    <form action="/createChannel" method="POST" id="channel-creation">
+                    <form action="/createChannel" method="POST" id="channel_creation">
                         @csrf
                         <label for="title">Channel Title</label>
                         <input type="text" name="title">
@@ -108,17 +108,7 @@
                     return;
                 }
 
-                navigator.geolocation.getCurrentPosition(position => {
-
-                    //const latitude = position.coords.latitude;
-                    //const longitude = position.coords.longitude;
-
-
-
-                    const latitude = document.getElementById('latitude').innerText;
-                    const longitude = document.getElementById('longitude').innerText;
-
-                    console.log("user position found: ", latitude, longitude);
+                    //console.log("user position found: ", latitude, longitude);
 
                     const formData = new FormData(this);
 
@@ -138,9 +128,7 @@
                         updateChannelList();
                     })
                     .catch(error => console.error('Error: ', error));
-                }, error => {
-                    alert("Unable to retrieve your location");
-                });
+
 
             });
 

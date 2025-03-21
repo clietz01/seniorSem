@@ -13,7 +13,7 @@
     <body>
         <div id="post-header">
             <div id="timestamp">
-                <p>Post created {{ $post->created_at }} by User</p>
+                <h3>Post created {{ $post->created_at }} by User</h3>
             </div>
             <p class="display-name">{{ $post->anonymous_username ?? 'Anonymous'}}</p>
             <img src="{{ $post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('images/default-profile-pic.jpg') }}"
@@ -25,9 +25,7 @@
                 <h1>{{ $post->title }}</h1>
             </a>
             <h3>{{ $post->body }}</h3>
-            <div class="comment">
-                {{$post->likes}} ❤️
-            </div>
+                <div id="likes">{{$post->likes}} ❤️</div>
         </div>
 
         <hr>

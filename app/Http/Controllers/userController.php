@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 use App\Models\User;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +25,7 @@ class userController extends Controller
         if ($validator->fails()) {
             return redirect('/')->withErrors($validator)->withInput();
         }
-    
+
         $incomingfields = $validator->validated();
 
         $incomingfields['password'] = bcrypt($incomingfields['password']);
@@ -40,7 +40,7 @@ class userController extends Controller
 
         Auth::login($user);
 
-        //log user in after registering 
+        //log user in after registering
         return redirect()->route('verification.notice')->with('success', 'Registration Successful! Please check your email to verify your account!');
     }
 
@@ -51,7 +51,7 @@ class userController extends Controller
             'loginpassword' => 'required'
         ]);
 
-        if (auth()->attempt(['name' => $incomingfields['loginusername'], 
+        if (auth()->attempt(['name' => $incomingfields['loginusername'],
                              'password' => $incomingfields['loginpassword']
                              ])){
 
@@ -65,13 +65,15 @@ class userController extends Controller
             $user = auth()->user()->load(['posts']); // Eager load relationships
             $postCount = $user->posts()->count(); //get amount of user posts
             $channels = $user->posts->pluck('channel')->unique(); //find channels user has posted to
+            $likes = $user->posts->sum('likes');
 
             return view('profile', [
                 'success' => 'You are now logged in!',
                 'user' => $user,
-                'posts' => $user->posts, 
+                'posts' => $user->posts,
                 'postCount' => $postCount,
-                'channels' => $channels
+                'channels' => $channels,
+                'likes' => $likes
             ]);
 
         }else {
@@ -84,18 +86,20 @@ class userController extends Controller
         auth()->logout();
         return redirect('/')->with('login_success', 'You are now logged out!')->withInput();
     }
-    
+
     public function showProfile(User $user){
 
         $posts = $user->posts()->latest()->get();
         $postCount = $user->posts()->count();
         $channels = $user->posts->pluck('channel')->unique();
+        $likes = $user->posts()->sum('likes');
 
         return view('profile', [
             'user' => $user,
             'posts' => $posts,
             'postCount' => $postCount,
-            'channels' => $channels
+            'channels' => $channels,
+            'likes' => $likes
         ]);
     }
 

@@ -30,7 +30,7 @@
             </div>
             <div class="comment">
                 <div id="user_posts">
-                    <h3>Your posts: [{{$postCount}}]</h3>
+                    <h2>Your posts: [{{$postCount}}]</h2>
                     <ul>
                         @if ($posts->isEmpty())
                             <h3>You have no posts!</h3>
@@ -42,7 +42,7 @@
                     </ul>
                 </div>
                 <div id="user_channels">
-                    <h3>Channels you've posted to:</h3>
+                    <h2>Channels you've posted to:</h2>
                     <ul>
                         @if($channels->isEmpty())
                             <h3>You haven't posted to any Channels yet.</h3>
@@ -52,10 +52,9 @@
                             @endforeach
                         @endif
                     </ul>
-                    <br>
                 </div>
                 <div id="user_likes">
-                    <h3>Total Likes: </h3>
+                    <h2>Total Likes ❤: {{ $likes }}</h2>
                 </div>
             </div>
         </div>

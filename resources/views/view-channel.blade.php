@@ -71,7 +71,7 @@
 
                 const lat = parseFloat(document.getElementById("chan-lat").innerText);
                 const lng = parseFloat(document.getElementById("chan-lng").innerText);
-                const chanRadius = parseFloat(document.getElementById("rad").innerText);
+                const chanRadius = parseFloat(document.getElementById("rad").innerText) * 1000;
 
                 if (isNaN(lat) || isNaN(lng) || isNaN(chanRadius)) {
                     console.error("Invalid channel data: ", { lat, lng, chanRadius });
