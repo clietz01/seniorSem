@@ -9,66 +9,72 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
-        <div class="comment">
-            <h1 id="post-title">{{$post->title}}</h1>
-            <div id="timestamp"><p>Created {{$post->created_at}} by User {{$post->anonymousUsername}}</p></div>
-            @if(auth()->check() && auth()->user()->id == $post->user_id)
-                <div id="post-container">
-                    <h3 id="post-body">{{$post->body}}</h3>
-                </div>
-                <div class="comment" id="post-options">
-                    <span class="like-count">{{ $post->likes ?? 0 }}</span> ❤️
-                        <button id="edit-post-button" data-post-id="{{$post->id}}">Edit Post</button>
-                        <a href="/posts/delete/{{$post->id}}"><button id="delete-post-button">Delete Post</button></a>
-                        <div id="repost-button"></div>
-                </div>
-                @else
-                <p id="post-body">{{$post->body}}</p>
-                <div class="comment">
-                    <button class="like-btn" data-post-id="{{ $post->id }}">
+        <div id="pretty-post-container">
+            <div class="comment" style="width: 90%;">
+                <h1 id="post-title">{{$post->title}}</h1>
+                <div id="timestamp"><p>Created {{$post->created_at}} by User {{$post->anonymousUsername}}</p></div>
+                @if(auth()->check() && auth()->user()->id == $post->user_id)
+                    <div id="post-container">
+                        <h3 id="post-body">{{$post->body}}</h3>
+                    </div>
+                    <div class="comment" id="post-options">
                         <span class="like-count">{{ $post->likes ?? 0 }}</span> ❤️
-                    </button>
-                </div>
-                <a href="/reply/{{$post->id}}"><button id="reply-button">Reply</button></a>
-            @endif
+                            <button id="edit-post-button" data-post-id="{{$post->id}}">Edit Post</button>
+                            <a href="/posts/delete/{{$post->id}}"><button id="delete-post-button">Delete Post</button></a>
+                            <div id="repost-button"></div>
+                    </div>
+                    @else
+                    <p id="post-body">{{$post->body}}</p>
+                    <div class="comment">
+                        <button class="like-btn" data-post-id="{{ $post->id }}">
+                            <span class="like-count">{{ $post->likes ?? 0 }}</span> ❤️
+                        </button>
+                    </div>
+                    <a href="/reply/{{$post->id}}"><button id="reply-button">Reply</button></a>
+                @endif
+            </div>
         </div>
-        <hr>
-        <h3>Replies:</h3>
-        @if(auth()->check() && auth()->user()->id == $post->user_id)
-        @if ($replies->isEmpty())
-            <h3>Your post has no replies yet!</h3>
-        @else
-            <ul>
-                @foreach ($replies as $reply)
-                    <li><p>{{$reply->content}}</p></li>
-                @endforeach
-            </ul>
-        @endif
-        @else
-            @if ($replies->isEmpty())
-                <h3>This post has no replies yet!</h3>
-                <p>Help add to this masterpiece!</p>
-            @else
-            <ul>
-                @foreach ($replies->take(3) as $reply)
-                    <li>
-                        <div class="comment-content">
-                            <p>{{$reply->content}} Created</p> <div id="timestamp"><p>{{$reply->created_at}}</p></div>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
-            @endif
-        @endif
-        <a href="/reply/{{$post->id}}"><button>See All Replies</button></a>
-        <hr>
-        <div class="comment">
-            <form action="/return/{{$post->user->id}}">
-                <button type="submit">Back to Profile</button>
-            </form>
-            <form action="/channels/{{$post->channel_id}}">
-                <button type="submit">Back to <strong>{{$post->channel->title}}</strong></button>
-            </form>
+        <div id="others-for-post">
+            <div id="reply-options">
+                <div class="comment">
+                    <form action="/return/{{$post->user->id}}">
+                        <button type="submit">Back to Profile</button>
+                    </form>
+                    <form action="/channels/{{$post->channel_id}}">
+                        <button type="submit">Back to <strong>{{$post->channel->title}}</strong></button>
+                    </form>
+                </div>
+                <div style="background-color: #333333; border-radius: 5px; padding: 10px">
+                    <h2>Replies:</h2>
+                    @if(auth()->check() && auth()->user()->id == $post->user_id)
+                    @if ($replies->isEmpty())
+                        <h3>Your post has no replies yet!</h3>
+                    @else
+                        <ul>
+                            @foreach ($replies as $reply)
+                                <li><p>{{$reply->content}}</p></li>
+                            @endforeach
+                        </ul>
+                    @endif
+                    @else
+                        @if ($replies->isEmpty())
+                            <h3>This post has no replies yet!</h3>
+                            <p>Help add to this masterpiece!</p>
+                        @else
+                        <ul>
+                            @foreach ($replies->take(3) as $reply)
+                                <li>
+                                    <div class="comment-content">
+                                        <p>{{$reply->content}} Created</p> <div id="timestamp"><p>{{$reply->created_at}}</p></div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                        @endif
+                    @endif
+                    <a href="/reply/{{$post->id}}"><button>See All {{ $post->replies->count() }} Replies</button></a>
+                </div>
+            </div>
         </div>
 
         <script src="{{asset('js/view-post.js')}}"></script>
