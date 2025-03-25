@@ -12,16 +12,17 @@
         <div style="display: flex; align-items: center; justify-content: center;">
                 <div id="channel-header" style="width: 90%;">
                     <div class="comment">
-                        <h1>Welcome to <div id="channel_title">{{$channel->title}}</div></h1>
-                        <div id="hiddenData">
-                            <p id="chan-lat">{{ $channel->latitude }}</p>
-                            <p id="chan-lng">{{ $channel->longitude }}</p>
-                            <p id="rad">{{ $channel->radius }}</p>
-                        </div>
-                        <div id="options">
-                            <h3>{{$channel->description}}</h3>
-                        </div>
-                        <a href="/channel"><button>Return to Channel Selection</button></a>
+                            <div id="options">
+                                <h1>Welcome to <div id="channel_title">{{$channel->title}}</div></h1>
+                                <hr>
+                                <div id="hiddenData">
+                                    <p id="chan-lat">{{ $channel->latitude }}</p>
+                                    <p id="chan-lng">{{ $channel->longitude }}</p>
+                                    <p id="rad">{{ $channel->radius }}</p>
+                            </div>
+                                <h3>{{$channel->description}}</h3>
+                            </div>
+                        <a href="/channel" ><button style="margin-top: 20px;">Return to Channel Selection</button></a>
                     </div>
                     <div class="comment">
                     <div id="map"></div>
@@ -45,7 +46,7 @@
                         </div>
                     </div>
                     <div id="view-posts">
-                        <h2>Posts in {{$channel->title}}:</h2>
+                        <h2>Posts in <span style="color: rgb(193, 0, 0)">{{$channel->title}}</span>:</h2>
                         <hr>
                         <ul>
                             @if ($posts->isEmpty())
@@ -79,6 +80,8 @@
                 const lat = parseFloat(document.getElementById("chan-lat").innerText);
                 const lng = parseFloat(document.getElementById("chan-lng").innerText);
                 const chanRadius = parseFloat(document.getElementById("rad").innerText) * 1000;
+
+                document.getElementById("hiddenData").style.display = "none";
 
                 if (isNaN(lat) || isNaN(lng) || isNaN(chanRadius)) {
                     console.error("Invalid channel data: ", { lat, lng, chanRadius });

@@ -1,8 +1,15 @@
 <li class="comment">
     <div class="comment-content">
         <div class="comment-header">
-            <p>Created by</p> 
-            <p class="display-name">{{ $anonymousUsername }} <span style="color: red">{{$reply->user->id == $post->user->id ? "(OP)" : ""}}</span></p>
+            <p>Created by</p>
+            <p class="display-name"><span
+            class="hashed_name"
+            data-user-id="{{ $reply->user->id }}"
+            data-username="{{ $anonymousUsername }}"
+            data-user-pic="{{ $reply->user->profile_picture ? asset( 'storage/' . $reply->user->profile_picture) : asset('images/default-profile-pic.jpg' )}}"
+            data-user-likes="{{ $reply->user->posts->sum('likes') }}"
+            >{{ $anonymousUsername }}</span>
+            <span style="color: red">{{$reply->user->id == $post->user->id ? "(OP)" : ""}}</span></p>
             <img src="{{ $reply->profilePicture }}" alt="User's Profile Picture" style="width: 40px; height: 40px; border-radius: 50%;">
         </div>
         <div id="comment-body-container">

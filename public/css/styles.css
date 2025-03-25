@@ -90,6 +90,13 @@ a {
     font-weight: bold;
 }
 
+#options{
+
+    background-color: #333333;
+    height: 80%;
+    padding: 10px;
+}
+
 #options a, p{
     display: inline;
 }
@@ -163,7 +170,7 @@ footer li a:hover {
 
 #post-body {
     padding: 15px;
-    background-color: #333333;
+
 }
 
 #post-container {
@@ -510,4 +517,50 @@ input[type="range"] {
 #actual-replies{
 
     width: 90%;
+}
+
+.hashed_name:hover {
+
+    cursor: pointer;
+    background-color: #333333;
+}
+
+#pfp-bubble:hover {
+
+    cursor: pointer;
+
+}
+
+#profile-preview{
+
+    position: fixed;
+    background-color: #333333;
+    border-radius: 5px;
+    box-shadow:  5px 5px 5px 5px #252525;
+    bottom: 30%;
+    left: 50%;
+    padding: 10px;
+    transform: translate(-50%, -50%);
+}
+
+#preview-usr {
+
+    background-color: #2d2d2d;
+}
+
+#preview-visuals {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    height: 100%;
+}
+
+.blur {
+    filter: blur(5px);
+    transition: filter 0.3s ease;
+}
+
+#post-title{
+    margin-bottom: -10px;
 }
