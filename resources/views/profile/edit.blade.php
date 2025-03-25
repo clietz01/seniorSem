@@ -25,11 +25,14 @@
                     </div>
                     <button type="submit">Save</button>
                 </form>
+                <a href="/return/{{$user->id}}"><button><- Back</button></a>
             </div>
             <div id="pfp-showcase">
                 @if (Auth::user()->profile_picture)
-                    <h3>Current Profile Picture:</h3>
-                    <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" style="max-width: 150px;">
+                    <div id="pfp-block">
+                        <h3>Current Profile Picture:</h3>
+                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" style="max-width: 150px;">
+                    </div>
                 @endif
             </div>
         </div>

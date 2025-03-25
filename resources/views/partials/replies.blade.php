@@ -2,7 +2,7 @@
     <div class="comment-content">
         <div class="comment-header">
             <p>Created by</p> 
-            <p class="display-name">{{ $anonymousUsername }}</p>
+            <p class="display-name">{{ $anonymousUsername }} <span style="color: red">{{$reply->user->id == $post->user->id ? "(OP)" : ""}}</span></p>
             <img src="{{ $reply->profilePicture }}" alt="User's Profile Picture" style="width: 40px; height: 40px; border-radius: 50%;">
         </div>
         <div id="comment-body-container">

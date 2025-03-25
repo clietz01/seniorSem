@@ -214,6 +214,7 @@ footer li a:hover {
 
 /* Timestamp styling */
 #timestamp {
+    display: inline-block;
     font-size: 0.9em;
     color: #777;
     margin-top: 5px;
@@ -248,11 +249,18 @@ button:hover {
 
 /* Main header styling */
 #post-header {
-    margin-bottom: 20px;
+    margin: 20px 20px;
     padding: 10px;
     background-color: #202020;
     border-radius: 5px;
     border: 1px solid #ccc;
+    width: 90%;
+}
+
+#post-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 form {
@@ -392,7 +400,7 @@ input[type="range"] {
 
 #verificaation-content {
 
-    width: 60%;
+    width: 50%;
 }
 
 
@@ -490,4 +498,16 @@ input[type="range"] {
 
     display: flex;
     justify-content: center;
+}
+
+
+#reply-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#actual-replies{
+
+    width: 90%;
 }

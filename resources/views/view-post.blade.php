@@ -12,7 +12,12 @@
         <div id="pretty-post-container">
             <div class="comment" style="width: 90%;">
                 <h1 id="post-title">{{$post->title}}</h1>
-                <div id="timestamp"><p>Created {{$post->created_at}} by User {{$post->anonymousUsername}}</p></div>
+                <div id="timestamp">
+                    <p>Created <span style="color: red">{{$post->created_at}}</span> by User <span style="color: purple">{{$post->anonymousUsername}}</span></p>
+                    <img src="{{ $post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('images/default-profile-pic.jpg') }}" 
+                    alt="User's Profile Picture"
+                    style="width: 40px; height: 40px; border-radius: 50%;">
+                </div>
                 @if(auth()->check() && auth()->user()->id == $post->user_id)
                     <div id="post-container">
                         <h3 id="post-body">{{$post->body}}</h3>
@@ -24,7 +29,7 @@
                             <div id="repost-button"></div>
                     </div>
                     @else
-                    <p id="post-body">{{$post->body}}</p>
+                    <h3 id="post-body">{{$post->body}}</h3>
                     <div class="comment">
                         <button class="like-btn" data-post-id="{{ $post->id }}">
                             <span class="like-count">{{ $post->likes ?? 0 }}</span> ❤️
