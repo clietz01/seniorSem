@@ -30,8 +30,7 @@
                             <div id="post-container">
                                 <h3 id="post-body">{{$post->body}}</h3>
                             </div>
-                    </div>
-                        <div id="post-options">
+                            <div id="post-options">
                             <span class="like-count">{{ $post->likes ?? 0 }}</span> ❤️
                                 <button id="edit-post-button" data-post-id="{{$post->id}}">Edit Post</button>
                                 <a href="/posts/delete/{{$post->id}}"><button id="delete-post-button">Delete Post</button></a>
@@ -46,6 +45,8 @@
                         </div>
                         <a href="/reply/{{$post->id}}"><button id="reply-button">Reply</button></a>
                     @endif
+                    </div>
+
                 </div>
             </div>
             <div id="others-for-post">
@@ -103,10 +104,19 @@
                 <hr>
             </div>
             <div id="preview-visuals">
-            <h3 id="preview-likes"></h3>
-            <img id="preview-pfp" src=""
-                    alt="User's Profile Picture"
-                    style="width: 60%; height: 100%; border-radius: 3px;">
+            <div>
+                <h3 id="preview-likes"></h3>
+                <div id="relative-posts" >
+                <h3 id="popup-posts-list">Relative Posts:</h3>
+                    <ul id="relative-posts-list">
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <img id="preview-pfp" src=""
+                        alt="User's Profile Picture"
+                        style="width: 60%; height: 100%; border-radius: 3px;">
+            </div>
             </div>
             <button id="preview-exit">🡨</button>
         </div>

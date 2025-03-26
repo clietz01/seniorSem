@@ -41,6 +41,7 @@ Route::get('/posts/delete/{post}', [postController::class, 'deletePost']);
 Route::put('/posts/replies/{reply}', [postController::class, 'updateReply']);
 Route::post('/replies/{reply}/reply', [postController::class, 'storeNestedReply'])->name('nestedReply');
 Route::post('/posts/{post}/like', [postController::class, 'likePost'])->middleware('auth');
+Route::post('/posts/location', [postController::class, 'getPostsByLocation']);
 
 //channelController routes
 Route::get('/channel', [channelController::class, 'channelScreen']);

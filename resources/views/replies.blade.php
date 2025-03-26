@@ -66,10 +66,20 @@
                 <hr>
             </div>
             <div id="preview-visuals">
-            <h3 id="preview-likes"></h3>
-            <img src="" id="preview-pfp"
-                    alt="User's Profile Picture"
-                    style="width: 60%; height: 100%; border-radius: 3px;">
+            <div>
+                <h3 id="preview-likes"></h3>
+                <div id="relative-posts" >
+                <h3 id="popup-posts-list">Relative Posts:</h3>
+                    <ul id="relative-posts-list">
+
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <img id="preview-pfp" src=""
+                        alt="User's Profile Picture"
+                        style="width: 60%; height: 100%; border-radius: 3px;">
+            </div>
             </div>
             <button id="preview-exit">🡨</button>
         </div>
