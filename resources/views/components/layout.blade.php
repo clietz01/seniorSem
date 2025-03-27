@@ -9,9 +9,9 @@
             <!-- Profile Picture -->
             <a href="/return/{{auth()->id()}}">
                 @if ($user->profile_picture)
-                    <img id="profile-pic" src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
+                    <img id="profile-pic" src="{{ secure_asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
                 @else
-                    <img id="profile-pic" src="{{ asset('images/default-profile-pic.jpg') }}" alt="Default Profile Picture">
+                    <img id="profile-pic" src="{{ secure_asset('images/default-profile-pic.jpg') }}" alt="Default Profile Picture">
                 @endif
             </a>
         </div>

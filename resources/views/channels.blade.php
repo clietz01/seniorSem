@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Channels</title>
-        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <link rel="stylesheet" href="{{ secure_asset('css/styles.css') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <style>
             #map {
@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-        <script src="{{ asset("js/googMapsAPI.js") }}"></script>
+        <script src="{{ secure_asset("js/googMapsAPI.js") }}"></script>
         <script>
 
             let channelList = document.getElementById('channel-list');

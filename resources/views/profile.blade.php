@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Profile</title>
-        <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+        <link rel="stylesheet" href="{{secure_asset('css/styles.css')}}">
     </head>
     <body>
         <div id="profile-container">
@@ -23,9 +23,9 @@
                     </div>
                     <div id="profile-shtuff">
                         @if ($user->profile_picture)
-                            <img id="profile-pic" src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
+                            <img id="profile-pic" src="{{ secure_asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
                         @else
-                            <img id="profile-pic" src="{{ asset('images/default-profile-pic.jpg') }}" alt="Default Profile Picture">
+                            <img id="profile-pic" src="{{ secure_asset('images/default-profile-pic.jpg') }}" alt="Default Profile Picture">
                         @endif
                     </div>
                 </div>

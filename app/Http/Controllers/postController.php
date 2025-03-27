@@ -142,8 +142,8 @@ class postController extends Controller
 
         // Assign profile picture
         $reply->profilePicture = $reply->user->profile_picture
-            ? asset('storage/' . $reply->user->profile_picture)
-            : asset('images/default-profile-pic.jpg');
+            ? secure_asset('storage/' . $reply->user->profile_picture)
+            : secure_asset('images/default-profile-pic.jpg');
 
         // Recursively process all replies
         if ($reply->replies->isNotEmpty()) {

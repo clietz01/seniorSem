@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+        <link rel="stylesheet" href="{{secure_asset('css/styles.css')}}">
         <title>Post</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
@@ -17,13 +17,13 @@
                             <p>Created <span style="color: red">{{$post->created_at}}</span> by User <span class="hashed_name"
                             data-user-id="{{ $post->user->id }}"
                             data-username="{{ $post->anonymous_username }}"
-                            data-user-pic="{{ $post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('images/default-profile-pic.jpg') }}"
+                            data-user-pic="{{ $post->user->profile_picture ? secure_asset('storage/' . $post->user->profile_picture) : secure_asset('images/default-profile-pic.jpg') }}"
                             data-user-likes="{{ $post->user->posts->sum('likes') }}"
                                 style="color: rebeccapurple">
                                 {{$post->anonymousUsername}}
                                 </span>
                             </p>
-                            <img id="pfp-bubble" src="{{ $post->user->profile_picture ? asset('storage/' . $post->user->profile_picture) : asset('images/default-profile-pic.jpg') }}"
+                            <img id="pfp-bubble" src="{{ $post->user->profile_picture ? secure_asset('storage/' . $post->user->profile_picture) : secure_asset('images/default-profile-pic.jpg') }}"
                             alt="User's Profile Picture"
                             style="width: 40px; height: 40px; border-radius: 50%;">
                         @if(auth()->check() && auth()->user()->id == $post->user_id)
@@ -121,8 +121,8 @@
             <button id="preview-exit">🡨</button>
         </div>
 
-        <script src="{{asset('js/view-post.js')}}"></script>
-        <script src="{{ asset('js/peek-profile.js') }}"></script>
+        <script src="{{secure_asset('js/view-post.js')}}"></script>
+        <script src="{{ secure_asset('js/peek-profile.js') }}"></script>
         <script>
 
      document.addEventListener("DOMContentLoaded", function () {
