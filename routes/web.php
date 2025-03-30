@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\feedbackController;
 use App\Models\post;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -52,6 +53,33 @@ Route::get('/channels/{channel}', [channelController::class, 'viewChannel'])->na
 
 //email auth
 Route::get('/email/verify', function (Request $request) {
+    if (!$request->user()->hasVerifiedEmail()) {
+        $request->user()->sendEmailVerificationNotification();
+    }
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function ($id, $hash, Request $request) {
+    $user = \App\Models\User::findOrFail($id);
+    
+    // Log the user in automatically
+    Auth::login($user);
+    
+    // Now verify the email
+    if (!$user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+    }
+    
+    return redirect('/')->with('message', 'Account Verified!');
+})->middleware(['signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+/*
+Route::get('/email/verify', function (Request $request) {
 
     if (!$request->user()->hasVerifiedEmail()) {
         $request->user()->sendEmailVerificationNotification();
@@ -72,7 +100,7 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-
+*/
 
 
 //support Controller routes
