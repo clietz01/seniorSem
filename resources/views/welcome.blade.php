@@ -15,7 +15,7 @@
                 <div class="alert-success">{{ session('login_success') }}</div>
                 @endif
                 <h1>Been here before? Login now!</h1>
-                <form action="{{ secure_url('login') }}" method="POST">
+                <form action="{{ url('login') }}" method="POST">
                     @csrf
                     @if (session('failure'))
                     <div class="alert alert-danger">{{ session('failure') }}</div>
@@ -27,7 +27,7 @@
             </div>
             <div id="signup">
                 <h1>New Here? Sign up now!</h1>
-                <form action="{{ secure_url('register') }}" method="POST">
+                <form action="{{ url('register') }}" method="POST">
                     @csrf
                     @if (session('success'))
                     <div class="alert-success">{{ session('success') }}</div>

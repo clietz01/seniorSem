@@ -14,7 +14,7 @@
                 @if (session('success'))
                     <div>{{ session('success') }}</div>
                 @endif
-                <form action="{{ secure_url(route('profile.updatePicture'))}}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url(route('profile.updatePicture'))}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div>
                         <label for="profile_picture">Upload Profile Picture</label>
