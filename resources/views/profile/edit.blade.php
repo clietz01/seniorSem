@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Replies</title>
-        <link rel="stylesheet" href="{{secure_asset('css/styles.css') }}">
+        <link rel="stylesheet" href="{{asset('css/styles.css') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <div id="profile-mega-container">
@@ -31,7 +31,7 @@
                 @if (Auth::user()->profile_picture)
                     <div id="pfp-block">
                         <h3>Current Profile Picture:</h3>
-                        <img src="{{ secure_asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" style="max-width: 150px;">
+                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture" style="max-width: 150px;">
                     </div>
                 @endif
             </div>

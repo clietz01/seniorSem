@@ -6,7 +6,7 @@
             class="hashed_name"
             data-user-id="{{ $reply->user->id }}"
             data-username="{{ $anonymousUsername }}"
-            data-user-pic="{{ $reply->user->profile_picture ? secure_asset( 'storage/' . $reply->user->profile_picture) : secure_asset('images/default-profile-pic.jpg' )}}"
+            data-user-pic="{{ $reply->user->profile_picture ? asset( 'storage/' . $reply->user->profile_picture) : asset('images/default-profile-pic.jpg' )}}"
             data-user-likes="{{ $reply->user->posts->sum('likes') }}"
             >{{ $anonymousUsername }}</span>
             <span style="color: red">{{$reply->user->id == $post->user->id ? "(OP)" : ""}}</span></p>
